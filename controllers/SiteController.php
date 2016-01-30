@@ -12,7 +12,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -21,10 +20,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout','index','chart'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,6 +55,10 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * Table Page
+     * @return string
+     */
     public function actionIndex()
     {
         $searchModel = new MainSearch();
@@ -63,6 +70,10 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Chart Page
+     * @return string
+     */
     public function actionChart()
     {
         $mains = Main::find()->all();
@@ -89,12 +100,6 @@ class SiteController extends Controller
                 // totals for summer/winter
                 for ($i = 1; $i <= 5; $i++) {
                     if (empty($totals[$season][$season . '_' . $i])) {
-                        if ($i == 5) {
-                            $filterField = 'paper';
-                        } else {
-                            $filterField = 'filter_' . $season . '_' . $i;
-                        }
-
                         $totals[$season][$season . '_' . $i] = [
                             'value' => 0,
                             'label' => $this->getSummerWinterNames($i)
@@ -118,7 +123,7 @@ class SiteController extends Controller
                     }
                     $totals[$season][$season . '_' . $i]['value'] += $sum;
 
-                    $totalsKG[$season][$season . '_' . $i]['value'] += ($sum * $this->getWeights($i));
+                    $totalsKG[$season][$season . '_' . $i]['value'] += ($sum * $this->getWeightByType($i));
                 }
                 // summer/winter based on cities
                 $cityKey = $main->city;
@@ -132,18 +137,13 @@ class SiteController extends Controller
                         } else {
                             $filterField = 'filter_' . $season . '_' . $i;
                         }
-                        $color = $this->getRandomColor($i);
                         $data[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'color' => $color['color'],
-                            'highlight' => $color['highlight'],
                             'label' => $this->getSummerWinterNames($i)
                         ];
 
                         $dataKG[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'color' => $color['color'],
-                            'highlight' => $color['highlight'],
                             'label' => $this->getSummerWinterNames($i)
                         ];
                     }
@@ -159,7 +159,7 @@ class SiteController extends Controller
                     }
                     $data[$season][$cityKey][$season . '_' . $i]['value'] += $sum;
 
-                    $dataKG[$season][$cityKey][$season . '_' . $i]['value'] += ($sum * $this->getWeights($i));
+                    $dataKG[$season][$cityKey][$season . '_' . $i]['value'] += ($sum * $this->getWeightByType($i));
                 }
             }
 
@@ -201,19 +201,11 @@ class SiteController extends Controller
         ]);
     }
 
-    public function getRandomColor($i)
-    {
-        $array = [
-            1 => ['color' => "#F7464A", 'highlight' => "#FF5A5E"],
-            2 => ['color' => "#46BFBD", 'highlight' => "#5AD3D1"],
-            3 => ['color' => "#FDB45C", 'highlight' => "#FFC870"],
-            4 => ['color' => "#FFC870", 'highlight' => "#A8B3C5"],
-            5 => ['color' => "#A8B3C5", 'highlight' => "#616774"],
-        ];
-        return $array[$i];
-        //return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-    }
-
+    /**
+     * Get the full name of the Trash Count item
+     * @param $i
+     * @return string
+     */
     public function getSummerWinterNames($i)
     {
         $array = [
@@ -223,9 +215,17 @@ class SiteController extends Controller
             4 => 'Ապակե տարրաներ / շշեր',
             5 => 'Թուղթ'
         ];
+        if (empty($array[$i])) {
+            return '';
+        }
         return $array[$i];
     }
 
+    /**
+     * Get the full name of recycling item
+     * @param $i
+     * @return string
+     */
     public function getRecycleNames($i)
     {
         $array = [
@@ -242,10 +242,19 @@ class SiteController extends Controller
             11 => 'Մետաղական իրեր',
             12 => 'Ռետինե իրեր',
         ];
+        if (empty($array[$i])) {
+           return '';
+        }
         return $array[$i];
     }
 
-    public function getWeights($i) {
+    /**
+     * Get the weight of unit for each type of Trash Count Type + Paper
+     * @param $i
+     * @return int
+     */
+    public function getWeightByType($i)
+    {
         $array = [
             1 => 0.035,
             2 => 0.042,
@@ -253,7 +262,32 @@ class SiteController extends Controller
             4 => 0.425,
             5 => 0.01
         ];
+
+        if (empty($array[$i])) {
+            return 0;
+        }
         return $array[$i];
     }
+    public function actionLogin()
+    {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
 }
