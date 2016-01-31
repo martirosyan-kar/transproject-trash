@@ -37,6 +37,7 @@ use yii\helpers\ArrayHelper;
  * @property string $winter_count_4
  * @property integer $person
  * @property integer $id
+ * @property integer $region
  *
  * @property Children $children0
  * @property City $city0
@@ -77,7 +78,36 @@ class Main extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['city', 'type', 'resident', 'children', 'employee', 'retiree', 'dominant', 'trash_man', 'trash_out', 'trash_count', 'trash_count_summer', 'trash_count_winter', 'paper', 'trash_relation', 'trash_recycle', 'person','summer_count_1', 'winter_count_1', 'summer_count_2', 'summer_count_3', 'summer_count_4', 'winter_count_2', 'winter_count_3', 'winter_count_4'], 'integer'],
+            [
+                [
+                    'city',
+                    'type',
+                    'resident',
+                    'children',
+                    'employee',
+                    'retiree',
+                    'dominant',
+                    'trash_man',
+                    'trash_out',
+                    'trash_count',
+                    'trash_count_summer',
+                    'trash_count_winter',
+                    'paper',
+                    'trash_relation',
+                    'trash_recycle',
+                    'person',
+                    'summer_count_1',
+                    'winter_count_1',
+                    'summer_count_2',
+                    'summer_count_3',
+                    'summer_count_4',
+                    'winter_count_2',
+                    'winter_count_3',
+                    'winter_count_4',
+                    'region'
+                ],
+                'integer'
+            ],
             [['answer_count', 'woman_count', 'date', 'interrogatory'], 'string', 'max' => 255],
         ];
     }
@@ -118,6 +148,7 @@ class Main extends \yii\db\ActiveRecord
             'filter_winter_4' => 'Աղբի քանակ.Ձ.4',
             'person' => 'Հարցումը անցկացրեց',
             'id' => 'ID',
+            'region' => 'Տարածք',
         ];
     }
 
@@ -135,6 +166,14 @@ class Main extends \yii\db\ActiveRecord
     public function getCity0()
     {
         return $this->hasOne(City::className(), ['id' => 'city']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region']);
     }
 
     /**
@@ -258,14 +297,15 @@ class Main extends \yii\db\ActiveRecord
     }
 
 
-    public function getTrashPlaces() {
+    public function getTrashPlaces()
+    {
         return $this->hasMany(TrashPlace::className(), ['id' => 'trash_place_id'])
             ->viaTable('main_trash_place', ['main_id' => 'id']);
     }
 
     public function getTrashPlaceMulti()
     {
-        return implode(', ',ArrayHelper::map($this->trashPlaces,'id','name'));
+        return implode(', ', ArrayHelper::map($this->trashPlaces, 'id', 'nameBoth'));
     }
 
     /**
@@ -278,13 +318,15 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashManMulti()
     {
-        return implode(', ',ArrayHelper::map($this->trashMen,'id','name'));
+        return implode(', ', ArrayHelper::map($this->trashMen, 'id', 'nameBoth'));
     }
 
-    public function getTrashMen() {
+    public function getTrashMen()
+    {
         return $this->hasMany(TrashMan::className(), ['id' => 'trash_man_id'])
             ->viaTable('main_trash_man', ['main_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -295,17 +337,20 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashRecycleMulti()
     {
-        return implode(', ',ArrayHelper::map($this->trashRecycles,'id','name'));
+        return implode(', ', ArrayHelper::map($this->trashRecycles, 'id', 'nameBoth'));
     }
 
-    public function getRecycleIds() {
-        return ArrayHelper::map($this->trashRecycles,'id','name');
+    public function getRecycleIds()
+    {
+        return ArrayHelper::map($this->trashRecycles, 'id', 'nameBoth');
     }
 
-    public function getTrashRecycles() {
+    public function getTrashRecycles()
+    {
         return $this->hasMany(TrashRecycle::className(), ['id' => 'trash_recycle_id'])
             ->viaTable('main_trash_recycle', ['main_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -316,10 +361,11 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashRelationMulti()
     {
-        return implode(', ',ArrayHelper::map($this->trashRelations,'id','name'));
+        return implode(', ', ArrayHelper::map($this->trashRelations, 'id', 'nameBoth'));
     }
 
-    public function getTrashRelations() {
+    public function getTrashRelations()
+    {
         return $this->hasMany(TrashRelation::className(), ['id' => 'trash_relation_id'])
             ->viaTable('main_trash_relation', ['main_id' => 'id']);
     }

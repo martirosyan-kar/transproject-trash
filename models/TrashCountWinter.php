@@ -3,12 +3,14 @@
 namespace app\models;
 
 use Yii;
+use app\components\EnglishBehavior;
 
 /**
  * This is the model class for table "trash_count_winter".
  *
  * @property integer $id
  * @property string $name
+ * @property string $name_eng
  *
  * @property Main[] $mains
  */
@@ -25,10 +27,20 @@ class TrashCountWinter extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            EnglishBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['name'], 'string']
+            [['name', 'name_eng'], 'string']
         ];
     }
 
@@ -40,6 +52,7 @@ class TrashCountWinter extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'name_eng' => 'Name Eng',
         ];
     }
 

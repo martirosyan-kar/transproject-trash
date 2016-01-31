@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\components\EnglishBehavior;
 
 /**
  * This is the model class for table "retiree".
@@ -20,6 +21,16 @@ class Retiree extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'retiree';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            EnglishBehavior::className(),
+        ];
     }
 
     /**
