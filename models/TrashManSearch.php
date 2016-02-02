@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\City;
+use app\models\TrashMan;
 
 /**
- * TrashManSearch represents the model behind the search form about `app\models\City`.
+ * TrashManSearch represents the model behind the search form about `app\models\TrashMan`.
  */
-class TrashManSearch extends City
+class TrashManSearch extends TrashMan
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class TrashManSearch extends City
     {
         return [
             [['id'], 'integer'],
-            [['name', 'name_eng'], 'safe'],
+            [['name_short', 'name_eng', 'name', 'name_short_eng'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class TrashManSearch extends City
      */
     public function search($params)
     {
-        $query = City::find();
+        $query = TrashMan::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -59,8 +59,10 @@ class TrashManSearch extends City
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'name_eng', $this->name_eng]);
+        $query->andFilterWhere(['like', 'name_short', $this->name_short])
+            ->andFilterWhere(['like', 'name_eng', $this->name_eng])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'name_short_eng', $this->name_short_eng]);
 
         return $dataProvider;
     }

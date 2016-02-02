@@ -3,14 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\City;
+use app\models\TrashMan;
 use app\models\TrashManSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TrashManController implements the CRUD actions for City model.
+ * TrashManController implements the CRUD actions for TrashMan model.
  */
 class TrashManController extends Controller
 {
@@ -27,7 +27,7 @@ class TrashManController extends Controller
     }
 
     /**
-     * Lists all City models.
+     * Lists all TrashMan models.
      * @return mixed
      */
     public function actionIndex()
@@ -42,7 +42,7 @@ class TrashManController extends Controller
     }
 
     /**
-     * Displays a single City model.
+     * Displays a single TrashMan model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +54,13 @@ class TrashManController extends Controller
     }
 
     /**
-     * Creates a new City model.
+     * Creates a new TrashMan model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new City();
+        $model = new TrashMan();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +72,7 @@ class TrashManController extends Controller
     }
 
     /**
-     * Updates an existing City model.
+     * Updates an existing TrashMan model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +91,7 @@ class TrashManController extends Controller
     }
 
     /**
-     * Deletes an existing City model.
+     * Deletes an existing TrashMan model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +104,15 @@ class TrashManController extends Controller
     }
 
     /**
-     * Finds the City model based on its primary key value.
+     * Finds the TrashMan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return City the loaded model
+     * @return TrashMan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = City::findOne($id)) !== null) {
+        if (($model = TrashMan::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

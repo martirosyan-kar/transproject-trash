@@ -12,6 +12,7 @@ use yii\base\Behavior;
 class EnglishBehavior extends Behavior
 {
     public $nameBoth;
+    public $nameBothShort;
 
     public function events()
     {
@@ -22,6 +23,12 @@ class EnglishBehavior extends Behavior
 
     public function afterFind($event)
     {
-        $this->nameBoth = $this->owner->name . (($this ->owner->name_eng) ? '('.$this ->owner->name_eng.')':'');
+        $this->nameBoth = $this->owner->name . (($this ->owner->name_eng) ? ' ('.$this ->owner->name_eng.')':'');
+        if(in_array('name_short',array_keys($this->owner->attributes))) {
+            $this->nameBothShort = $this->owner->name_short . (($this->owner->name_short_eng) ? ' (' . $this->owner->name_short_eng . ')' : '');
+        }
+        else {
+            $this->nameBothShort = $this->nameBoth;
+        }
     }
 }

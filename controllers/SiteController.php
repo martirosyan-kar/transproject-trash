@@ -5,13 +5,16 @@ namespace app\controllers;
 use app\models\City;
 use app\models\Main;
 use app\models\MainSearch;
+use app\models\Region;
 use app\models\TrashRecycle;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 use app\models\LoginForm;
+use app\components\LanguageHelper;
 
 class SiteController extends Controller
 {
@@ -27,7 +30,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout','index','chart'],
+                        'actions' => ['logout', 'list', 'index', 'chart'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -63,10 +66,11 @@ class SiteController extends Controller
     {
         $searchModel = new MainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $region = Yii::$app->request->queryParams['MainSearch']['region'];
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'region' => $region
         ]);
     }
 
@@ -76,7 +80,12 @@ class SiteController extends Controller
      */
     public function actionChart()
     {
-        $mains = Main::find()->all();
+        $params = Yii::$app->request->queryParams;
+        $region = 1;
+        if(!empty($params['MainSearch']['region'])) {
+            $region = $params['MainSearch']['region'];
+        }
+        $mains = Main::find()->where(array('region' => $region))->all();
         $cities = ArrayHelper::map(City::find()->all(), 'id', 'name');
         $recycles = ArrayHelper::map(TrashRecycle::find()->all(), 'id', 'name');
         $cityKeys = array_keys($cities);
@@ -102,12 +111,12 @@ class SiteController extends Controller
                     if (empty($totals[$season][$season . '_' . $i])) {
                         $totals[$season][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i)
+                            'label' => $this->getSummerWinterNames($i, $season)
                         ];
 
                         $totalsKG[$season][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i)
+                            'label' => $this->getSummerWinterNames($i, $season)
                         ];
 
                     }
@@ -139,12 +148,12 @@ class SiteController extends Controller
                         }
                         $data[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i)
+                            'label' => $this->getSummerWinterNames($i, $season)
                         ];
 
                         $dataKG[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i)
+                            'label' => $this->getSummerWinterNames($i, $season)
                         ];
                     }
                     $sum = 0;
@@ -198,6 +207,7 @@ class SiteController extends Controller
             'recycleTotal' => $recycleTotal,
             'recycles' => $recycles,
             'totalsKG' => $totalsKG,
+            'region' => $region
         ]);
     }
 
@@ -206,15 +216,11 @@ class SiteController extends Controller
      * @param $i
      * @return string
      */
-    public function getSummerWinterNames($i)
+    public function getSummerWinterNames($i, $type)
     {
-        $array = [
-            1 => 'Պլաստմասսայից շշեր 0.5-1 լ',
-            2 => 'Պլաստմասսայից շշեր 1.5-2 լ',
-            3 => 'Պոլիէթիլենային տոպրակներ',
-            4 => 'Ապակե տարրաներ / շշեր',
-            5 => 'Թուղթ'
-        ];
+        $className = 'app\models\TrashCount' . ucfirst($type);
+        $array = ArrayHelper::map($className::find()->all(), 'id', 'nameBoth');
+        $array[5] = 'Թուղթ';
         if (empty($array[$i])) {
             return '';
         }
@@ -243,7 +249,7 @@ class SiteController extends Controller
             12 => 'Ռետինե իրեր',
         ];
         if (empty($array[$i])) {
-           return '';
+            return '';
         }
         return $array[$i];
     }
@@ -268,6 +274,7 @@ class SiteController extends Controller
         }
         return $array[$i];
     }
+
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -289,5 +296,12 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionList()
+    {
+        $lists = LanguageHelper::getModels();
+
+        return $this->render('list', ['lists' => $lists]);
     }
 }

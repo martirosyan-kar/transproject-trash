@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TrashManSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cities';
+$this->title = 'Trash Men';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="city-index">
+<div class="trash-man-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create City', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Trash Man', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,8 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'name',
+            'name_short',
             'name_eng',
+            'name',
+            'name_short_eng',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

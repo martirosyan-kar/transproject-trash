@@ -11,6 +11,8 @@ use app\components\EnglishBehavior;
  * @property integer $id
  * @property string $name
  * @property string $name_eng
+ * @property string $name_short
+ * @property string $name_short_eng
  *
  * @property MainTrashPlace[] $mainTrashPlaces
  */
@@ -40,7 +42,7 @@ class TrashPlace extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_eng'], 'string']
+            [['name', 'name_eng', 'name_short', 'name_short_eng'], 'string']
         ];
     }
 
@@ -53,6 +55,8 @@ class TrashPlace extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'name_eng' => 'Name Eng',
+            'name_short' => 'Name Short',
+            'name_short_eng' => 'Name Short Eng',
         ];
     }
 

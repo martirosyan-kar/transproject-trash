@@ -21,6 +21,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name_eng') ?>
 
+    <?= $form->field($model, 'name_short') ?>
+
+    <?= $form->field($model, 'name_short_eng') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

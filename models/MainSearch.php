@@ -49,6 +49,7 @@ class MainSearch extends Main
             ],
             [
                 [
+                    'region',
                     'city',
                     'type',
                     'resident',
@@ -109,6 +110,9 @@ class MainSearch extends Main
      */
     public function search($params)
     {
+        if (empty($this->region)) {
+            $this->region = 1;
+        }
         $query = Main::find()->joinWith(['mainTrashPlaces', 'mainTrashMen', 'mainTrashRecycles', 'mainTrashRelations']);
 
         $dataProvider = new ActiveDataProvider([
@@ -127,6 +131,7 @@ class MainSearch extends Main
         $query->distinct();
 
         $query->andFilterWhere([
+            'region' => $this->region,
             'city' => $this->city,
             'type' => $this->type,
             'resident' => $this->resident,
@@ -167,7 +172,7 @@ class MainSearch extends Main
         foreach ($seasons as $season) {
             for ($i = 1; $i <= 4; $i++) {
                 $fieldCompare = $season . '_count_' . $i;
-                $fieldFilter = 'filter_'.$season.'_'.$i;
+                $fieldFilter = 'filter_' . $season . '_' . $i;
                 for ($j = 1; $j <= 4; $j++) {
                     if ($this->$fieldFilter == $j) {
                         $query->andWhere(['between', $fieldCompare, $ranges[$j][0], $ranges[$j][1]]);

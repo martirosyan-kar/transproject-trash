@@ -305,7 +305,7 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashPlaceMulti()
     {
-        return implode(', ', ArrayHelper::map($this->trashPlaces, 'id', 'nameBoth'));
+        return implode(', ', ArrayHelper::map($this->trashPlaces, 'id', 'nameBothShort'));
     }
 
     /**
@@ -318,7 +318,7 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashManMulti()
     {
-        return implode(', ', ArrayHelper::map($this->trashMen, 'id', 'nameBoth'));
+        return implode(', ', ArrayHelper::map($this->trashMen, 'id', 'nameBothShort'));
     }
 
     public function getTrashMen()
@@ -337,12 +337,12 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashRecycleMulti()
     {
-        return implode(', ', ArrayHelper::map($this->trashRecycles, 'id', 'nameBoth'));
+        return implode(', ', ArrayHelper::map($this->trashRecycles, 'id', 'nameBothShort'));
     }
 
     public function getRecycleIds()
     {
-        return ArrayHelper::map($this->trashRecycles, 'id', 'nameBoth');
+        return ArrayHelper::map($this->trashRecycles, 'id', 'nameBothShort');
     }
 
     public function getTrashRecycles()
@@ -361,7 +361,7 @@ class Main extends \yii\db\ActiveRecord
 
     public function getTrashRelationMulti()
     {
-        return implode(', ', ArrayHelper::map($this->trashRelations, 'id', 'nameBoth'));
+        return implode(', ', ArrayHelper::map($this->trashRelations, 'id', 'nameBothShort'));
     }
 
     public function getTrashRelations()

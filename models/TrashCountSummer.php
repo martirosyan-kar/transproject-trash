@@ -9,8 +9,10 @@ use app\components\EnglishBehavior;
  * This is the model class for table "trash_count_summer".
  *
  * @property integer $id
- * @property string $name
+ * @property string $name_short
  * @property string $name_eng
+ * @property string $name
+ * @property string $name_short_eng
  *
  * @property Main[] $mains
  */
@@ -40,7 +42,7 @@ class TrashCountSummer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_eng'], 'string']
+            [['name_short', 'name_eng', 'name', 'name_short_eng'], 'string']
         ];
     }
 
@@ -51,8 +53,10 @@ class TrashCountSummer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name_short' => 'Name Short',
             'name_eng' => 'Name Eng',
+            'name' => 'Name',
+            'name_short_eng' => 'Name Short Eng',
         ];
     }
 

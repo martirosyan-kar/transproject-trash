@@ -9,13 +9,18 @@ $this->title = 'Trash: Charts';
 use yii\web\JqueryAsset;
 use app\assets\ChartAsset;
 use yii\web\View;
+use app\components\LanguageHelper;
 
 //ChartAsset::register($this);
 $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className(), ChartAsset::className()]]);
 
 $seasons = ['summer' => 'Մոտավոր աղբի քանակը ամռանը', 'winter' => 'Մոտավոր աղբի քանակը ձմռանը'];
+
+$arrayParams = ['MainSearch' => ['region' => $region]];
+$indexLink = LanguageHelper::getLinks('index', $arrayParams);
 ?>
-<h4><a href="/site/index">Վերադառնալ</a></h4>
+<h3><a href="<?= $indexLink['url']; ?>"><?= $indexLink['label']; ?></a></h3>
+
 <div class="col-sm-12">
     <?php
     foreach ($totals as $season => $seasonValues) { ?>

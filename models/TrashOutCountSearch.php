@@ -19,7 +19,7 @@ class TrashOutCountSearch extends TrashOutCount
     {
         return [
             [['id'], 'integer'],
-            [['name', 'name_eng'], 'safe'],
+            [['name_short', 'name_eng', 'name', 'name_short_eng'], 'safe'],
         ];
     }
 
@@ -59,8 +59,10 @@ class TrashOutCountSearch extends TrashOutCount
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'name_eng', $this->name_eng]);
+        $query->andFilterWhere(['like', 'name_short', $this->name_short])
+            ->andFilterWhere(['like', 'name_eng', $this->name_eng])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'name_short_eng', $this->name_short_eng]);
 
         return $dataProvider;
     }

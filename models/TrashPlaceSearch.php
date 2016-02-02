@@ -19,7 +19,7 @@ class TrashPlaceSearch extends TrashPlace
     {
         return [
             [['id'], 'integer'],
-            [['name', 'name_eng'], 'safe'],
+            [['name', 'name_eng', 'name_short', 'name_short_eng'], 'safe'],
         ];
     }
 
@@ -60,7 +60,9 @@ class TrashPlaceSearch extends TrashPlace
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'name_eng', $this->name_eng]);
+            ->andFilterWhere(['like', 'name_eng', $this->name_eng])
+            ->andFilterWhere(['like', 'name_short', $this->name_short])
+            ->andFilterWhere(['like', 'name_short_eng', $this->name_short_eng]);
 
         return $dataProvider;
     }

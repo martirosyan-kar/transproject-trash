@@ -35,10 +35,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Data', 'url' => ['/site/index']],
-            ['label' => 'Chart', 'url' => ['/site/chart']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
+        'items' => array_merge(\app\components\LanguageHelper::getMenuItems(),[
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [
@@ -46,7 +43,7 @@ AppAsset::register($this);
                     'url' => ['/site/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ],
-        ],
+        ]),
     ]);
     NavBar::end();
     ?>
