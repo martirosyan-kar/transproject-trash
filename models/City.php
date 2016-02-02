@@ -11,7 +11,9 @@ use app\components\EnglishBehavior;
  * @property integer $id
  * @property string $name
  * @property string $name_eng
+ * @property integer $region
  *
+ * @property Region $region0
  * @property Main[] $mains
  */
 class City extends \yii\db\ActiveRecord
@@ -33,13 +35,15 @@ class City extends \yii\db\ActiveRecord
             EnglishBehavior::className(),
         ];
     }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name', 'name_eng'], 'string']
+            [['name', 'name_eng'], 'string'],
+            [['region'], 'integer']
         ];
     }
 
@@ -52,7 +56,16 @@ class City extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'name_eng' => 'Name Eng',
+            'region' => 'Region',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion0()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region']);
     }
 
     /**

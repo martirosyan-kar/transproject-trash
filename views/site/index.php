@@ -28,8 +28,9 @@ use app\components\LanguageHelper;
 $this->title = 'Trash: Data';
 $arrayParams = ['MainSearch' => ['region' => $region]];
 $chartLink = LanguageHelper::getLinks('chart', $arrayParams);
+$addLink = LanguageHelper::getLinks('add', $arrayParams);
 ?>
-<h3><a href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a></h3>
+<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a href="<?= $addLink['url']; ?>"><?= $addLink['label']; ?></a>&nbsp;</h3>
 <div class="site-index" style="width: 2500px;">
 
     <?= GridView::widget([

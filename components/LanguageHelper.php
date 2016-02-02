@@ -119,6 +119,10 @@ class LanguageHelper
                 'label' => 'Վերադառնալ (Back)',
                 'url' => '/site/index'
             ],
+            'add' => [
+                'label' => 'Ավելացնել (Add)',
+                'url' => '/site/main'
+            ],
         ];
 
         $return = $array[$key];

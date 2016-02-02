@@ -30,7 +30,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'list', 'index', 'chart'],
+                        'actions' => ['logout', 'list', 'index', 'chart','main'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,9 +64,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $params = Yii::$app->request->queryParams;
+        $region = 1;
+        if(!empty($params['MainSearch']['region'])) {
+            $region = $params['MainSearch']['region'];
+        }
+
         $searchModel = new MainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $region = Yii::$app->request->queryParams['MainSearch']['region'];
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -304,4 +309,29 @@ class SiteController extends Controller
 
         return $this->render('list', ['lists' => $lists]);
     }
+
+    public function actionMain()
+    {
+        $params = Yii::$app->request->queryParams;
+        $region = 1;
+        if(!empty($params['MainSearch']['region'])) {
+            $region = $params['MainSearch']['region'];
+        }
+
+        $model = new Main;
+        $model->region = $region;
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('main', [
+            'model' => $model,
+            'region' => $region
+        ]);
+    }
+
 }
