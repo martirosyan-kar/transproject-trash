@@ -30,7 +30,7 @@ $arrayParams = ['MainSearch' => ['region' => $region]];
 $chartLink = LanguageHelper::getLinks('chart', $arrayParams);
 $addLink = LanguageHelper::getLinks('add', $arrayParams);
 ?>
-<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a href="<?= $addLink['url']; ?>"><?= $addLink['label']; ?></a>&nbsp;</h3>
+<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
 <div class="site-index" style="width: 2500px;">
 
     <?= GridView::widget([
@@ -112,20 +112,20 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 //'contentOptions'=>['style'=>'width: 120px;']
             ],
             [
-                'attribute' => 'trash_out',
-                'value' => 'trashOut.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'trash_out',
-                    ArrayHelper::map(TrashOutCount::find()->all(), 'id', 'nameBothShort'),
+                'attribute' => 'filter_trash_out',
+                'value' => 'trash_out',
+                'filter' => Html::activeDropDownList($searchModel, 'filter_trash_out',
+                    array('1' => '1-5', '2' => '6-10', '3' => '11-20', '4' => '20+'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                    //'contentOptions'=>['style'=>'width: 120px;']
             ],
             [
-                'attribute' => 'trash_count',
-                'value' => 'trashCount.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'trash_count',
-                    ArrayHelper::map(TrashCount::find()->all(), 'id', 'nameBothShort'),
+                'attribute' => 'filter_trash_count',
+                'value' => 'trash_count',
+                'filter' => Html::activeDropDownList($searchModel, 'filter_trash_count',
+                    array('1' => '1-5', '2' => '6-10', '3' => '11-20', '4' => '20+'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                    //'contentOptions'=>['style'=>'width: 120px;']
             ],
             [
                 'attribute' => 'filter_summer_1',

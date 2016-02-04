@@ -116,12 +116,12 @@ class SiteController extends Controller
                     if (empty($totals[$season][$season . '_' . $i])) {
                         $totals[$season][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i, $season)
+                            'label' => LanguageHelper::getSummerWinterNames($i, $season)
                         ];
 
                         $totalsKG[$season][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i, $season)
+                            'label' => LanguageHelper::getSummerWinterNames($i, $season)
                         ];
 
                     }
@@ -153,12 +153,12 @@ class SiteController extends Controller
                         }
                         $data[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i, $season)
+                            'label' => LanguageHelper::getSummerWinterNames($i, $season)
                         ];
 
                         $dataKG[$season][$cityKey][$season . '_' . $i] = [
                             'value' => 0,
-                            'label' => $this->getSummerWinterNames($i, $season)
+                            'label' => LanguageHelper::getSummerWinterNames($i, $season)
                         ];
                     }
                     $sum = 0;
@@ -214,22 +214,6 @@ class SiteController extends Controller
             'totalsKG' => $totalsKG,
             'region' => $region
         ]);
-    }
-
-    /**
-     * Get the full name of the Trash Count item
-     * @param $i
-     * @return string
-     */
-    public function getSummerWinterNames($i, $type)
-    {
-        $className = 'app\models\TrashCount' . ucfirst($type);
-        $array = ArrayHelper::map($className::find()->all(), 'id', 'nameBoth');
-        $array[5] = 'Թուղթ';
-        if (empty($array[$i])) {
-            return '';
-        }
-        return $array[$i];
     }
 
     /**
@@ -318,8 +302,9 @@ class SiteController extends Controller
             $region = $params['MainSearch']['region'];
         }
 
-        $model = new Main;
-        $model->region = $region;
+        //$model = new Main;
+        //$model->region = $region;
+        $model = Main::find()->where(array('id'=>1))->one();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -327,6 +312,11 @@ class SiteController extends Controller
                 return;
             }
         }
+
+        $model->places = ArrayHelper::getColumn($model->mainTrashPlaces, 'trash_place_id');
+        $model->men = ArrayHelper::getColumn($model->mainTrashMen, 'trash_man_id');
+        $model->relations = ArrayHelper::getColumn($model->mainTrashRelations, 'trash_relation_id');
+        $model->recycles = ArrayHelper::getColumn($model->mainTrashRecycles, 'trash_recycle_id');
 
         return $this->render('main', [
             'model' => $model,

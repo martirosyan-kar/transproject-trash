@@ -64,6 +64,10 @@ use yii\helpers\ArrayHelper;
  */
 class Main extends \yii\db\ActiveRecord
 {
+    public $places = [];
+    public $men = [];
+    public $relations = [];
+    public $recycles = [];
     /**
      * @inheritdoc
      */
@@ -129,14 +133,13 @@ class Main extends \yii\db\ActiveRecord
             'employee' => 'Աշխատավարձ ստացողների քանակ',
             'retiree' => 'Թոշակառուներ',
             'dominant' => 'Ընտանիքի գլխավոր',
-            'mainTrashPlaces.trash_place_id' => 'Սովորաբար որտեղ եք նետում աղբը',
-            'mainTrashMen.trash_man_id' => 'Ով է նետում աղբը',
+            'men' => 'Ով է սովորաբար նետում աղբը Ձեր տանը?',
             'trash_out' => 'Քանի անգամ է հանվում աղբը',
             'trash_count' => 'Քանի տոպրակ/դույլ',
             'trash_count_summer' => 'Մոտավոր աղբի քանակը ամռանը',
             'trash_count_winter' => 'Մոտավոր աղբի քանակը ձմռանը',
             'paper' => 'Թուղթ',
-            'mainTrashRelations.trash_relation_id' => 'Աղբի նկատմամբ վերաբերմունք',
+            'relations' => 'Ինչպես եք վերաբերվում աղբի խնդրին',
             'mainTrashRecycles.trash_recycle_id' => 'Վերամշակման փորձ',
             'filter_summer_1' => 'Աղբի քանակ. Ա.1',
             'filter_summer_2' => 'Աղբի քանակ.Ա.2',
@@ -149,6 +152,8 @@ class Main extends \yii\db\ActiveRecord
             'person' => 'Հարցումը անցկացրեց',
             'id' => 'ID',
             'region' => 'Տարածք',
+            'places' => 'Սովորաբար որտեղ եք նետում աղբը?',
+            'recycles' => 'Պատրաստ եք արդյոք մասնակցել այսպիսի փորձին: Առանձին հավաքել հետևյալ աղբը  հնարավոր վերամշակման համակարգի համար?',
         ];
     }
 
@@ -227,14 +232,6 @@ class Main extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTrashCount()
-    {
-        return $this->hasOne(TrashCount::className(), ['id' => 'trash_count']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTrashCountSummer()
     {
         return $this->hasOne(TrashCountSummer::className(), ['id' => 'trash_count_summer']);
@@ -254,14 +251,6 @@ class Main extends \yii\db\ActiveRecord
     public function getTrashMan()
     {
         return $this->hasOne(TrashMan::className(), ['id' => 'trash_man']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTrashOut()
-    {
-        return $this->hasOne(TrashOutCount::className(), ['id' => 'trash_out']);
     }
 
     /**

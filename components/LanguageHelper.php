@@ -23,7 +23,7 @@ class LanguageHelper
 
         foreach ($regions as $key => $value) {
             $arrayParams = ['MainSearch' => ['region' => $key]];
-            $params = array_merge(["{$controller->id}/index"], $arrayParams);
+            $params = array_merge(["site/index"], $arrayParams);
             $url = Yii::$app->urlManager->createUrl($params);
             $items[] = ['label' => $value, 'url' => $url];
         }
@@ -105,11 +105,9 @@ class LanguageHelper
         ];
     }
 
-    public static function getLinks($key,$params)
+    public static function getLinks($key, $params)
     {
         $controller = Yii::$app->controller;
-
-
         $array = [
             'chart' => [
                 'label' => 'Գրաֆիկներ (Charts)',
@@ -131,5 +129,31 @@ class LanguageHelper
         $return['url'] = Yii::$app->urlManager->createUrl($params);
 
         return $return;
+    }
+
+    /**
+     * Get the full name of the Trash Count item
+     * @param $i
+     * @return string
+     */
+    public static function getSummerWinterNames($i, $type)
+    {
+        $className = 'app\models\TrashCount' . ucfirst($type);
+        $array = ArrayHelper::map($className::find()->all(), 'id', 'nameBoth');
+        $array[5] = 'Թուղթ';
+        if (empty($array[$i])) {
+            return '';
+        }
+        return $array[$i];
+    }
+
+    public static function getRanges()
+    {
+        return [
+            1 => [1, 5],
+            2 => [6, 10],
+            3 => [11, 20],
+            4 => [21, 10000]
+        ];
     }
 }

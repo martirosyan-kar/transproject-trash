@@ -43,7 +43,9 @@ class MainSearch extends Main
                     'filter_winter_1',
                     'filter_winter_2',
                     'filter_winter_3',
-                    'filter_winter_4'
+                    'filter_winter_4',
+                    'filter_trash_out',
+                    'filter_trash_count'
                 ],
                 'safe'
             ],
@@ -88,7 +90,9 @@ class MainSearch extends Main
             'filter_winter_1',
             'filter_winter_2',
             'filter_winter_3',
-            'filter_winter_4'
+            'filter_winter_4',
+            'filter_trash_out',
+            'filter_trash_count'
         ]);
     }
 
@@ -149,10 +153,10 @@ class MainSearch extends Main
             'trash_recycle' => $this->trash_recycle,
             'person' => $this->person,
             'id' => $this->id,
-            'main_trash_place.trash_place_id' => $this->getAttribute('mainTrashPlaces.trash_place_id'),
-            'main_trash_man.trash_man_id' => $this->getAttribute('mainTrashMen.trash_man_id'),
-            'main_trash_recycle.trash_recycle_id' => $this->getAttribute('mainTrashRecycles.trash_recycle_id'),
-            'main_trash_relation.trash_relation_id' => $this->getAttribute('mainTrashRelations.trash_relation_id'),
+            'main_trash_place.trash_place_id' => $this->getAttribute('places'),
+            'main_trash_man.trash_man_id' => $this->getAttribute('men'),
+            'main_trash_recycle.trash_recycle_id' => $this->getAttribute('recycles'),
+            'main_trash_relation.trash_relation_id' => $this->getAttribute('relations'),
         ]);
         $query = $this->addBetween($query);
 
@@ -180,7 +184,6 @@ class MainSearch extends Main
                 }
             }
         }
-
         return $query;
     }
 }

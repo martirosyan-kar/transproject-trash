@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use app\models\Region;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\City */
 /* @var $form yii\widgets\ActiveForm */
@@ -16,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name_eng')->textInput() ?>
 
-    <?= $form->field($model, 'region')->textInput() ?>
+    <?= $form->field($model, 'region')->dropDownList(ArrayHelper::map(Region::find()->all(),'id','nameBoth')); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
