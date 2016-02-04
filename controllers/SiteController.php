@@ -302,9 +302,8 @@ class SiteController extends Controller
             $region = $params['MainSearch']['region'];
         }
 
-        //$model = new Main;
-        //$model->region = $region;
-        $model = Main::find()->where(array('id'=>1))->one();
+        $model = new Main;
+        $model->region = $region;
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
