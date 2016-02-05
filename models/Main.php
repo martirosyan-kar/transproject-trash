@@ -39,19 +39,13 @@ use yii\helpers\ArrayHelper;
  * @property integer $id
  * @property integer $region
  *
- * @property Children $children0
  * @property City $city0
  * @property Dominant $dominant0
- * @property Employee $employee0
  * @property Paper $paper0
  * @property Person $person0
- * @property Resident $resident0
- * @property Retiree $retiree0
- * @property TrashCount $trashCount
  * @property TrashCountSummer $trashCountSummer
  * @property TrashCountWinter $trashCountWinter
  * @property TrashMan $trashMan
- * @property TrashOutCount $trashOut
  * @property TrashRecycle $trashRecycle
  * @property TrashRelation $trashRelation
  * @property Type $type0
@@ -108,7 +102,9 @@ class Main extends \yii\db\ActiveRecord
                     'winter_count_2',
                     'winter_count_3',
                     'winter_count_4',
-                    'region'
+                    'region',
+                    'resident_man',
+                    'resident_woman'
                 ],
                 'integer'
             ],
@@ -154,15 +150,9 @@ class Main extends \yii\db\ActiveRecord
             'region' => 'Տարածք',
             'places' => 'Սովորաբար որտեղ եք նետում աղբը?',
             'recycles' => 'Պատրաստ եք արդյոք մասնակցել այսպիսի փորձին: Առանձին հավաքել հետևյալ աղբը  հնարավոր վերամշակման համակարգի համար?',
+            'resident_man'=>'Չափահաս տղամարդ',
+            'resident_woman'=>'Չափահաս կին',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getChildren0()
-    {
-        return $this->hasOne(Children::className(), ['id' => 'children']);
     }
 
     /**
@@ -192,14 +182,6 @@ class Main extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEmployee0()
-    {
-        return $this->hasOne(Employee::className(), ['id' => 'employee']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPaper0()
     {
         return $this->hasOne(Paper::className(), ['id' => 'paper']);
@@ -211,22 +193,6 @@ class Main extends \yii\db\ActiveRecord
     public function getPerson0()
     {
         return $this->hasOne(Person::className(), ['id' => 'person']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getResident0()
-    {
-        return $this->hasOne(Resident::className(), ['id' => 'resident']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRetiree0()
-    {
-        return $this->hasOne(Retiree::className(), ['id' => 'retiree']);
     }
 
     /**

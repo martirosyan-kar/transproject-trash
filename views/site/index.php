@@ -6,15 +6,9 @@ use yii\grid\GridView;
 use app\models\Region;
 use app\models\City;
 use app\models\Type;
-use app\models\Resident;
-use app\models\Children;
-use app\models\Employee;
-use app\models\Retiree;
 use app\models\Dominant;
 use app\models\TrashPlace;
 use app\models\TrashMan;
-use app\models\TrashOutCount;
-use app\models\TrashCount;
 use app\models\TrashCountSummer;
 use app\models\TrashCountWinter;
 use app\models\Paper;
@@ -30,13 +24,33 @@ $arrayParams = ['MainSearch' => ['region' => $region]];
 $chartLink = LanguageHelper::getLinks('chart', $arrayParams);
 $addLink = LanguageHelper::getLinks('add', $arrayParams);
 ?>
-<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
+<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a
+        href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
 <div class="site-index" style="width: 2500px;">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'update') {
+                        $arrayParams = ['MainSearch' => ['region' => $model->region]];
+                        $arrayParams['id'] = $model->id;
+                        $params = array_merge(["site/main"], $arrayParams);
+                        $url = Yii::$app->urlManager->createUrl($params);
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $arrayParams = ['MainSearch' => ['region' => $model->region], 'id' => $model->id];
+                        $params = array_merge(["site/delete"], $arrayParams);
+                        $url = Yii::$app->urlManager->createUrl($params);
+                        return $url;
+                    }
+                }
+            ],
             ['class' => 'yii\grid\SerialColumn'],
 
             [
@@ -55,38 +69,10 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
                 //'contentOptions'=>['style'=>'width: 120px;']
             ],
-            [
-                'attribute' => 'resident',
-                'value' => 'resident0.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'resident',
-                    ArrayHelper::map(Resident::find()->all(), 'id', 'nameBothShort'),
-                    ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
-            ],
-            [
-                'attribute' => 'children',
-                'value' => 'children0.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'children',
-                    ArrayHelper::map(Children::find()->all(), 'id', 'nameBothShort'),
-                    ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
-            ],
-            [
-                'attribute' => 'employee',
-                'value' => 'employee0.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'employee',
-                    ArrayHelper::map(Employee::find()->all(), 'id', 'nameBothShort'),
-                    ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
-            ],
-            [
-                'attribute' => 'retiree',
-                'value' => 'retiree0.nameBothShort',
-                'filter' => Html::activeDropDownList($searchModel, 'retiree',
-                    ArrayHelper::map(Retiree::find()->all(), 'id', 'nameBothShort'),
-                    ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
-            ],
+            'resident',
+            'children',
+            'employee',
+            'retiree',
             [
                 'attribute' => 'dominant',
                 'value' => 'dominant0.nameBothShort',
@@ -117,7 +103,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'filter_trash_out',
                     array('1' => '1-5', '2' => '6-10', '3' => '11-20', '4' => '20+'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                    //'contentOptions'=>['style'=>'width: 120px;']
+                //'contentOptions'=>['style'=>'width: 120px;']
             ],
             [
                 'attribute' => 'filter_trash_count',
@@ -125,7 +111,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'filter_trash_count',
                     array('1' => '1-5', '2' => '6-10', '3' => '11-20', '4' => '20+'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                    //'contentOptions'=>['style'=>'width: 120px;']
+                //'contentOptions'=>['style'=>'width: 120px;']
             ],
             [
                 'attribute' => 'filter_summer_1',

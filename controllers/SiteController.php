@@ -5,6 +5,10 @@ namespace app\controllers;
 use app\models\City;
 use app\models\Main;
 use app\models\MainSearch;
+use app\models\MainTrashMan;
+use app\models\MainTrashPlace;
+use app\models\MainTrashRecycle;
+use app\models\MainTrashRelation;
 use app\models\Region;
 use app\models\TrashRecycle;
 use Yii;
@@ -30,7 +34,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'list', 'index', 'chart','main'],
+                        'actions' => ['logout', 'list', 'index', 'chart', 'main', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -40,6 +44,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'delete' => ['post']
                 ],
             ],
         ];
@@ -66,7 +71,7 @@ class SiteController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $region = 1;
-        if(!empty($params['MainSearch']['region'])) {
+        if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
 
@@ -87,7 +92,7 @@ class SiteController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $region = 1;
-        if(!empty($params['MainSearch']['region'])) {
+        if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
         $mains = Main::find()->where(array('region' => $region))->all();
@@ -298,17 +303,66 @@ class SiteController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $region = 1;
-        if(!empty($params['MainSearch']['region'])) {
+        if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
+        if(!empty($params['id'])) {
+            $model = Main::find()->where(['id'=>$params['id']])->one();
+            $arrayParams = ['MainSearch' => ['region' => $model->region]];
+        }
+        else {
+            $model = new Main;
+            $model->region = $region;
+            $arrayParams = ['MainSearch' => ['region' => $region]];
+        }
 
-        $model = new Main;
-        $model->region = $region;
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
+                if (!$model->isNewRecord) {
+                    MainTrashPlace::deleteAll(['main_id'=>$model->id]);
+                    MainTrashMan::deleteAll(['main_id'=>$model->id]);
+                    MainTrashRelation::deleteAll(['main_id'=>$model->id]);
+                    MainTrashRecycle::deleteAll(['main_id'=>$model->id]);
+                }
+                $model->save();
+                $main = Yii::$app->request->post()['Main'];
+                if (!empty($main['places'])) {
+                    foreach ($main['places'] as $value) {
+                        $relationModel = new MainTrashPlace();
+                        $relationModel->main_id = $model->id;
+                        $relationModel->trash_place_id = $value;
+                        $relationModel->save();
+                    }
+                }
+                if (!empty($main['men'])) {
+                    foreach ($main['men'] as $value) {
+                        $relationModel = new MainTrashMan();
+                        $relationModel->main_id = $model->id;
+                        $relationModel->trash_man_id = $value;
+                        $relationModel->save();
+                    }
+                }
+                if (!empty($main['relations'])) {
+                    foreach ($main['relations'] as $value) {
+                        $relationModel = new MainTrashRelation();
+                        $relationModel->main_id = $model->id;
+                        $relationModel->trash_relation_id = $value;
+                        $relationModel->save();
+                    }
+                }
+                if (!empty($main['recycles'])) {
+                    foreach ($main['recycles'] as $value) {
+                        $relationModel = new MainTrashRecycle();
+                        $relationModel->main_id = $model->id;
+                        $relationModel->trash_recycle_id = $value;
+                        $relationModel->save();
+                    }
+                }
+                $arrayParams['id'] = $model->id;
+                $params = array_merge(["site/index"], $arrayParams);
+                $url = Yii::$app->urlManager->createUrl($params);
+                return $this->redirect($url);
             }
         }
 
@@ -323,4 +377,25 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionDelete($id)
+    {
+        $params = Yii::$app->request->queryParams;
+        if (empty($params['MainSearch']['region'])) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->findModel($id)->delete();
+        $params = array_merge(["site/index"], $params);
+        $url = Yii::$app->urlManager->createUrl($params);
+        return $this->redirect($url);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Main::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

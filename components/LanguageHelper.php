@@ -42,29 +42,13 @@ class LanguageHelper
                 'Համայնք',
                 'Community'
             ],
-            'Children' => [
-                'Երեխաներ',
-                'Children'
-            ],
             'Dominant' => [
                 'Ընտանիքի գլխավոր',
                 'Household head'
             ],
-            'Employee' => [
-                'Աշխատավարձ ստացողների քանակ',
-                'Employed (on paid job)'
-            ],
             'Paper' => [
                 'Արդյոք թափում եք աղբի հետ միասին նաև մեծ քանակությամբ թուղթ կամ ստվարաթուղթ',
                 'Is there rather much of paper/cardboard in waste from your household'
-            ],
-            'Resident' => [
-                'Փաստացի բնակիչների քանակը',
-                'Actual number of persons in the household'
-            ],
-            'Retiree' => [
-                'Թոշակառուներ',
-                'Receiving only pension'
             ],
             'TrashCount' => [
                 'Մոտ քանի տոպրակ/դույլ աղբ է կուտակվում մեկ շաբաթում',

@@ -6,7 +6,6 @@ use yii\helpers\ArrayHelper;
 
 use app\models\City;
 use app\models\Type;
-use app\models\Resident;
 use app\models\Dominant;
 use app\models\TrashPlace;
 use app\models\TrashMan;
@@ -14,12 +13,15 @@ use app\models\Paper;
 use app\models\TrashRelation;
 use app\models\TrashRecycle;
 use app\models\Person;
+use yii\web\JqueryAsset;
 
 use app\components\LanguageHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Main */
 /* @var $form ActiveForm */
+
+$this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]);
 ?>
 <style>
     #main-recycles.radio label {
@@ -39,9 +41,9 @@ use app\components\LanguageHelper;
         [
             'class' => 'col-sm-6 form-control'
         ])->label(null, ['class' => 'col-sm-4']); ?>
-    <div class="col-sm-2"></div>
+    
     <div class="clearfix"></div>
-
+    <hr>
     <?= $form->field($model, 'type',
         ['options' => ['class' => 'form-inline col-sm-10']])
         ->radioList(
@@ -50,37 +52,38 @@ use app\components\LanguageHelper;
             ['class' => 'radio col-sm-6', 'separator' => '<span style="padding-left: 30px;"></span>']
         )
         ->label(null, ['class' => 'col-sm-4']); ?>
-
-    <div class="col-sm-2"></div>
+    <div class="clearfix"></div>
+    <hr>
+    <?= $form->field($model, 'resident',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['readonly'=>'readonly']); ?>
     <div class="clearfix"></div>
 
-    <?= $form->field($model, 'resident')->radioList(ArrayHelper::map(Resident::find()->all(),
-        'id', 'nameBoth'), ['class' => 'radio', 'separator' => '<br>']); ?>
-
-    <div class="col-sm-2"></div>
+    <?= $form->field($model, 'resident_man',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
     <div class="clearfix"></div>
 
-    <?= $form->field($model, 'resident')->radioList(ArrayHelper::map(Resident::find()->all(),
-        'id', 'nameBoth'), ['class' => 'radio', 'separator' => '<br>']); ?>
-
-    <div class="col-sm-2"></div>
+    <?= $form->field($model, 'resident_woman',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
     <div class="clearfix"></div>
 
-    <?= $form->field($model, 'children') ?>
-
-    <div class="col-sm-2"></div>
+    <?= $form->field($model, 'children',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
     <div class="clearfix"></div>
 
-    <?= $form->field($model, 'employee') ?>
-
-    <div class="col-sm-2"></div>
+    <?= $form->field($model, 'employee',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
     <div class="clearfix"></div>
 
-    <?= $form->field($model, 'retiree') ?>
-
-    <div class="col-sm-2"></div>
+    <?= $form->field($model, 'retiree',
+        ['options' => ['class' => 'form-inline col-sm-10']])
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
     <div class="clearfix"></div>
-
+    <hr>
     <?= $form->field($model, 'dominant',
         ['options' => ['class' => 'form-inline col-sm-10']])
         ->radioList(
@@ -89,8 +92,7 @@ use app\components\LanguageHelper;
             ['class' => 'radio col-sm-6', 'separator' => '<span style="padding-left: 30px;"></span>']
         )
         ->label(null, ['class' => 'col-sm-4']); ?>
-
-    <div class="col-sm-2"></div>
+    <hr>
     <div class="clearfix"></div>
     <hr>
     <?= $form->field($model, 'places',

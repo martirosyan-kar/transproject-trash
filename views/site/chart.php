@@ -12,7 +12,7 @@ use yii\web\View;
 use app\components\LanguageHelper;
 
 //ChartAsset::register($this);
-$this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className(), ChartAsset::className()]]);
+$this->registerJsFile('js/charts.js', ['depends' => [JqueryAsset::className(), ChartAsset::className()]]);
 
 $seasons = ['summer' => 'Մոտավոր աղբի քանակը ամռանը', 'winter' => 'Մոտավոր աղբի քանակը ձմռանը'];
 
