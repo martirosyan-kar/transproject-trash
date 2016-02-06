@@ -50,10 +50,6 @@ class LanguageHelper
                 'Արդյոք թափում եք աղբի հետ միասին նաև մեծ քանակությամբ թուղթ կամ ստվարաթուղթ',
                 'Is there rather much of paper/cardboard in waste from your household'
             ],
-            'TrashCount' => [
-                'Մոտ քանի տոպրակ/դույլ աղբ է կուտակվում մեկ շաբաթում',
-                'TrashCount'
-            ],
             'TrashCountSummer' => [
                 'Մոտավոր աղբի քանակը շաբաթում Ամռանը',
                 'Approximate amount of waste per week in Summer'
@@ -65,10 +61,6 @@ class LanguageHelper
             'TrashMan' => [
                 'Ով է սովորաբար նետում աղբը Ձեր տանը',
                 'Who typically takes out the waste generated in your household'
-            ],
-            'TrashOutCount' => [
-                'Քանի անգամ է Ձեր տանից  շաբաթվա ընթացքում հանվում աղբը?',
-                'How many times a week take your household the waste out?'
             ],
             'TrashPlace' => [
                 'Սովորաբար որտեղ եք նետում աղբըՍովորաբար որտեղ եք նետում աղբը',
