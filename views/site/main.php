@@ -15,6 +15,9 @@ use app\models\TrashRecycle;
 use app\models\Person;
 use yii\web\JqueryAsset;
 
+use kartik\date\DatePicker;
+
+
 use app\components\LanguageHelper;
 
 /* @var $this yii\web\View */
@@ -230,7 +233,12 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
     <?= $form->field($model, 'date',
         ['options' => ['class' => 'form-inline col-sm-4']])
         ->textInput(['class' => 'form-control'])
-        ->label(null, ['class' => 'col-sm-4']); ?>
+        ->label(null, ['class' => 'col-sm-4'])
+        ->widget(DatePicker::className(),['pluginOptions' => [
+            'format' => 'yyyy-mm-dd',
+            'todayHighlight' => true
+        ]])
+    ; ?>
 
     <?= $form->field($model, 'interrogatory',
         ['options' => ['class' => 'form-inline col-sm-4']])

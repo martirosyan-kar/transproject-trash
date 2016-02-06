@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af27407a3d298450914a523b060c97de",
-    "content-hash": "eb0ae3648dea1866f4b08069d5c41a8e",
+    "hash": "6d0031b9f16cff7f0cdaaadd75e0763f",
+    "content-hash": "fcc811c9a412f92fcf5c430dcab75ad4",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -58,16 +58,16 @@
         },
         {
             "name": "bower-asset/google-apis",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GoogleWebComponents/google-apis.git",
-                "reference": "352f9f2a8cfb0196faf12c6e229b00d92edc2a76"
+                "reference": "6b0a3b08ed055aeccfdfffbb5475ecf828db6488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GoogleWebComponents/google-apis/zipball/352f9f2a8cfb0196faf12c6e229b00d92edc2a76",
-                "reference": "352f9f2a8cfb0196faf12c6e229b00d92edc2a76",
+                "url": "https://api.github.com/repos/GoogleWebComponents/google-apis/zipball/6b0a3b08ed055aeccfdfffbb5475ecf828db6488",
+                "reference": "6b0a3b08ed055aeccfdfffbb5475ecf828db6488",
                 "shasum": ""
             },
             "require": {
@@ -325,20 +325,20 @@
         },
         {
             "name": "bower-asset/polymer",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Polymer/polymer.git",
-                "reference": "aa535d1675342007cbf64dc9c66497cf74cbc616"
+                "reference": "284332a905ddd60eab11901a82ac037976175cf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Polymer/polymer/zipball/aa535d1675342007cbf64dc9c66497cf74cbc616",
-                "reference": "aa535d1675342007cbf64dc9c66497cf74cbc616",
+                "url": "https://api.github.com/repos/Polymer/polymer/zipball/284332a905ddd60eab11901a82ac037976175cf8",
+                "reference": "284332a905ddd60eab11901a82ac037976175cf8",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/webcomponentsjs": ">=0.7.18,<0.8.0"
+                "bower-asset/webcomponentsjs": ">=0.7.20,<0.8.0"
             },
             "require-dev": {
                 "bower-asset/web-component-tester": "*"
@@ -346,7 +346,9 @@
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": [
-                    "polymer.html"
+                    "polymer.html",
+                    "polymer-mini.html",
+                    "polymer-micro.html"
                 ],
                 "bower-asset-ignore": [
                     "/.*",
@@ -361,20 +363,17 @@
         },
         {
             "name": "bower-asset/promise-polyfill",
-            "version": "v1.0.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PolymerLabs/promise-polyfill.git",
-                "reference": "2ef7dada161cae30e69ffff918485c57121d4b88"
+                "url": "https://github.com/taylorhakes/promise-polyfill.git",
+                "reference": "7b211ed6d9c833d0c9bdb89e1360ee32c4024743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PolymerLabs/promise-polyfill/zipball/2ef7dada161cae30e69ffff918485c57121d4b88",
-                "reference": "2ef7dada161cae30e69ffff918485c57121d4b88",
+                "url": "https://api.github.com/repos/taylorhakes/promise-polyfill/zipball/7b211ed6d9c833d0c9bdb89e1360ee32c4024743",
+                "reference": "7b211ed6d9c833d0c9bdb89e1360ee32c4024743",
                 "shasum": ""
-            },
-            "require": {
-                "bower-asset/polymer": ">=1.0.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -593,6 +592,101 @@
             "time": "2013-11-30 08:25:19"
         },
         {
+            "name": "kartik-v/yii2-krajee-base",
+            "version": "1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-krajee-base.git",
+                "reference": "0c274e31e4392cbafc5fe158eae81738794e02ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0c274e31e4392cbafc5fe158eae81738794e02ce",
+                "reference": "0c274e31e4392cbafc5fe158eae81738794e02ce",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2-bootstrap": "@dev"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\base\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Base library and foundation components for all Yii2 Krajee extensions.",
+            "homepage": "https://github.com/kartik-v/yii2-krajee-base",
+            "keywords": [
+                "base",
+                "extension",
+                "foundation",
+                "krajee",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-01-10 12:26:29"
+        },
+        {
+            "name": "kartik-v/yii2-widget-datepicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
+                "reference": "ff5a97576c49a72e0480f135d9e7ce1a18c788e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/ff5a97576c49a72e0480f135d9e7ce1a18c788e6",
+                "reference": "ff5a97576c49a72e0480f135d9e7ce1a18c788e6",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\date\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 wrapper for the bootstrap datepicker plugin (sub repo split from yii2-widgets).",
+            "homepage": "https://github.com/kartik-v/yii2-widget-datepicker",
+            "keywords": [
+                "date",
+                "extension",
+                "form",
+                "jquery",
+                "picker",
+                "plugin",
+                "select2",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-01-10 15:14:17"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
@@ -785,20 +879,20 @@
         },
         {
             "name": "yiisoft/yii2-composer",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "ca8d23707ae47d20b0454e4b135c156f6da6d7be"
+                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/ca8d23707ae47d20b0454e4b135c156f6da6d7be",
-                "reference": "ca8d23707ae47d20b0454e4b135c156f6da6d7be",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/7452fd908a5023b8bb5ea1b123a174ca080de464",
+                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "1.0.0"
+                "composer-plugin-api": "^1.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -828,7 +922,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2015-03-01 06:22:44"
+            "time": "2016-02-06 00:49:24"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -1190,7 +1284,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kartik-v/yii2-widget-datepicker": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
