@@ -22,6 +22,6 @@ composer.phar
 .DS_Store
 
 # phpunit itself is not needed
-phpunit.phar
+#phpunit.phar
 # local phpunit config
 /phpunit.xml
