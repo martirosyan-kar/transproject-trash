@@ -79,12 +79,12 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
 
     <?= $form->field($model, 'employee',
         ['options' => ['class' => 'form-inline col-sm-10']])
-        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>' form-control']); ?>
     <div class="clearfix"></div>
 
     <?= $form->field($model, 'retiree',
         ['options' => ['class' => 'form-inline col-sm-10']])
-        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>'quantity form-control']); ?>
+        ->label(null, ['class' => 'col-sm-4'])->textInput(['class'=>' form-control']); ?>
     <div class="clearfix"></div>
     <hr>
     <?= $form->field($model, 'dominant',
@@ -200,8 +200,7 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
     <?= $form->field($model, 'recycles',
         ['options' => ['class' => 'form-inline col-sm-12']])
         ->checkboxList(
-            ArrayHelper::map(TrashRecycle::find()->all(),
-                'id', 'nameBoth'), [
+            TrashRecycle::getOrderedList(), [
                 'class' => 'radio col-sm-12',
                 'separator' => '',
             ]

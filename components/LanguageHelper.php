@@ -63,8 +63,8 @@ class LanguageHelper
                 'Who typically takes out the waste generated in your household'
             ],
             'TrashPlace' => [
-                'Սովորաբար որտեղ եք նետում աղբըՍովորաբար որտեղ եք նետում աղբը',
-                'Approximately how many bags/buckets of waste are taken out per week'
+                'Սովորաբար որտեղ եք նետում աղբը',
+                'Where do you typically take waste from your household?'
             ],
             'TrashRecycle' => [
                 'Պատրաստ եք արդյոք մասնակցել այսպիսի փորձին: Առանձին հավաքել հետևյալ աղբը  հնարավոր վերամշակման համակարգի համար',
@@ -78,6 +78,10 @@ class LanguageHelper
                 'Տնտեսության տիպը',
                 'Household type'
             ],
+            'Person' => [
+                'Հարցումը անցկացրեց',
+                'The interviewer name'
+            ]
         ];
     }
 

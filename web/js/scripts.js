@@ -11,7 +11,6 @@ $(function () {
                 sum += value;
             }
         });
-        console.log(sum)
         $('#main-resident').val(sum);
     });
 });

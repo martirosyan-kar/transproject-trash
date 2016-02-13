@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\LanguageHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -62,6 +63,7 @@ class Main extends \yii\db\ActiveRecord
     public $men = [];
     public $relations = [];
     public $recycles = [];
+
     /**
      * @inheritdoc
      */
@@ -131,27 +133,32 @@ class Main extends \yii\db\ActiveRecord
             'dominant' => 'Ընտանիքի գլխավոր',
             'men' => 'Ով է սովորաբար նետում աղբը Ձեր տանը?',
             'trash_out' => 'Քանի անգամ է հանվում աղբը',
+            'filter_trash_out' => 'Քանի անգամ է հանվում աղբը',
             'trash_count' => 'Քանի տոպրակ/դույլ',
+            'filter_trash_count' => 'Քանի տոպրակ/դույլ',
             'trash_count_summer' => 'Մոտավոր աղբի քանակը ամռանը',
             'trash_count_winter' => 'Մոտավոր աղբի քանակը ձմռանը',
             'paper' => 'Թուղթ',
             'relations' => 'Ինչպես եք վերաբերվում աղբի խնդրին',
             'mainTrashRecycles.trash_recycle_id' => 'Վերամշակման փորձ',
-            'filter_summer_1' => 'Աղբի քանակ. Ա.1',
-            'filter_summer_2' => 'Աղբի քանակ.Ա.2',
-            'filter_summer_3' => 'Աղբի քանակ.Ա.3',
-            'filter_summer_4' => 'Աղբի քանակ.Ա.4',
-            'filter_winter_1' => 'Աղբի քանակ.Ձ.1',
-            'filter_winter_2' => 'Աղբի քանակ.Ձ.2',
-            'filter_winter_3' => 'Աղբի քանակ.Ձ.3',
-            'filter_winter_4' => 'Աղբի քանակ.Ձ.4',
+            'mainTrashRelations.trash_relation_id' => 'Ինչպես եք վերաբերվում աղբի խնդրին',
+            'mainTrashPlaces.trash_place_id' => 'Սովորաբար որտեղ եք նետում աղբը',
+            'mainTrashMen.trash_man_id' => 'Ով է սովորաբար նետում աղբը Ձեր տանը',
+            'filter_summer_1' => $this->getLabel('filter_summer_1'),
+            'filter_summer_2' => $this->getLabel('filter_summer_2'),
+            'filter_summer_3' => $this->getLabel('filter_summer_3'),
+            'filter_summer_4' => $this->getLabel('filter_summer_4'),
+            'filter_winter_1' => $this->getLabel('filter_winter_1'),
+            'filter_winter_2' => $this->getLabel('filter_winter_2'),
+            'filter_winter_3' => $this->getLabel('filter_winter_3'),
+            'filter_winter_4' => $this->getLabel('filter_winter_4'),
             'person' => 'Հարցումը անցկացրեց',
             'id' => 'ID',
             'region' => 'Տարածք',
             'places' => 'Սովորաբար որտեղ եք նետում աղբը?',
             'recycles' => 'Պատրաստ եք արդյոք մասնակցել այսպիսի փորձին: Առանձին հավաքել հետևյալ աղբը  հնարավոր վերամշակման համակարգի համար?',
-            'resident_man'=>'Չափահաս տղամարդ',
-            'resident_woman'=>'Չափահաս կին',
+            'resident_man' => 'Չափահաս տղամարդ',
+            'resident_woman' => 'Չափահաս կին',
         ];
     }
 
@@ -323,5 +330,15 @@ class Main extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TrashRelation::className(), ['id' => 'trash_relation_id'])
             ->viaTable('main_trash_relation', ['main_id' => 'id']);
+    }
+
+    public function getLabel($attribute)
+    {
+        $matches = array();
+        if (preg_match('/^filter_(summer|winter)_(\d+)$/', $attribute, $matches)) {
+            $season = $matches[1];
+            return LanguageHelper::getSummerWinterNames($matches[2],$season);
+        }
+        return '';
     }
 }

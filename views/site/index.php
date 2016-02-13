@@ -16,6 +16,7 @@ use app\models\TrashRelation;
 use app\models\TrashRecycle;
 use app\models\Person;
 use app\components\LanguageHelper;
+use app\models\Main;
 
 /* @var $this yii\web\View */
 
@@ -23,10 +24,20 @@ $this->title = 'Trash: Data';
 $arrayParams = ['MainSearch' => ['region' => $region]];
 $chartLink = LanguageHelper::getLinks('chart', $arrayParams);
 $addLink = LanguageHelper::getLinks('add', $arrayParams);
+$model = new Main;
+$width = '300px';
 ?>
+<style>
+    .grid-view th {
+        white-space: normal;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 3px !important;
+    }
+</style>
 <h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a
         href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
-<div class="site-index" style="width: 2500px;">
+<div class="site-index" style="width: 3500px;">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -67,7 +78,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'type',
                     ArrayHelper::map(Type::find()->all(), 'id', 'nameBothShort'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                //'contentOptions'=>['style'=>'width: 120px;'],
             ],
             'resident',
             'children',
@@ -87,7 +98,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'mainTrashPlaces.trash_place_id',
                     ArrayHelper::map(TrashPlace::find()->all(), 'id', 'nameBothShort'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                'contentOptions'=>['style'=>'width: '.$width.';']
             ],
             [
                 'attribute' => 'mainTrashMen.trash_man_id',
@@ -95,7 +106,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'mainTrashMen.trash_man_id',
                     ArrayHelper::map(TrashMan::find()->all(), 'id', 'nameBothShort'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                'contentOptions'=>['style'=>'width: '.$width.';']
             ],
             [
                 'attribute' => 'filter_trash_out',
@@ -183,7 +194,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'paper',
                     ArrayHelper::map(Paper::find()->all(), 'id', 'nameBothShort'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                'contentOptions'=>['style'=>'width: '.$width.';']
             ],
             [
                 'attribute' => 'mainTrashRelations.trash_relation_id',
@@ -191,7 +202,7 @@ $addLink = LanguageHelper::getLinks('add', $arrayParams);
                 'filter' => Html::activeDropDownList($searchModel, 'mainTrashRelations.trash_relation_id',
                     ArrayHelper::map(TrashRelation::find()->all(), 'id', 'nameBothShort'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
-                //'contentOptions'=>['style'=>'width: 120px;']
+                'contentOptions'=>['style'=>'width: '.$width.';']
             ],
             [
                 'attribute' => 'mainTrashRecycles.trash_recycle_id',

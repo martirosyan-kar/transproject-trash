@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\components\EnglishBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "trash_recycle".
@@ -75,5 +76,23 @@ class TrashRecycle extends \yii\db\ActiveRecord
     public function getMainTrashRecycles()
     {
         return $this->hasMany(MainTrashRecycle::className(), ['trash_recycle_id' => 'id']);
+    }
+
+    public static function getOrderedList()
+    {
+        $models = self::find()->orderBy('id')->all();
+        $array = [];
+        $i = 0;
+        foreach ($models as $value) {
+            $array[$i] = $value;
+            $i += 2;
+            if ($i == count($models)) {
+                $i = 1;
+            }
+        }
+        ksort($array);
+        $return = ArrayHelper::map($array,
+            'id', 'nameBoth');
+        return $return;
     }
 }
