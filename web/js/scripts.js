@@ -7,6 +7,8 @@ $(function () {
         var sum = 0;
         $.each(inputs, function (key, input) {
             var value = parseInt($(input).val());
+            if (value == '')
+                value = 0;
             if (!isNaN(value)) {
                 sum += value;
             }
