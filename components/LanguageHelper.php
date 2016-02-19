@@ -27,7 +27,12 @@ class LanguageHelper
             $url = Yii::$app->urlManager->createUrl($params);
             $items[] = ['label' => $value, 'url' => $url];
         }
-        $items[] = ['label' => 'Գրադարան (Library)', 'url' => '/site/list'];
+        if(\Yii::$app->user->can('site.list')) {
+            $items[] = ['label' => 'Գրադարան (Library)', 'url' => '/site/list'];
+        }
+        if(\Yii::$app->user->can('site.users')) {
+            $items[] = ['label' => 'Օգտագործողներ (Users)', 'url' => '/site/users'];
+        }
         return $items;
     }
 
@@ -134,6 +139,31 @@ class LanguageHelper
             2 => [6, 10],
             3 => [11, 20],
             4 => [21, 10000]
+        ];
+    }
+
+    public static function getUserMenus(){
+        return [
+            'users' => [
+                'label' => 'Օգտագործողներ (Users)',
+                'url' => Yii::$app->urlManager->createUrl(['/user/manager'])
+            ],
+            'rbac-rule' => [
+                'label' => 'Իրավասություններ (rule)',
+                'url' => Yii::$app->urlManager->createUrl(['/rbac/rule'])
+            ],
+            'rbac-permission' => [
+                'label' => 'Իրավասություններ (permissions)',
+                'url' => Yii::$app->urlManager->createUrl(['/rbac/permission'])
+            ],
+            'rbac-role' => [
+                'label' => 'Իրավասություններ (role)',
+                'url' => Yii::$app->urlManager->createUrl(['/rbac/role'])
+            ],
+            'rbac-assignment' => [
+                'label' => 'Իրավասություններ (assignment)',
+                'url' => Yii::$app->urlManager->createUrl(['/rbac/assignment'])
+            ]
         ];
     }
 }

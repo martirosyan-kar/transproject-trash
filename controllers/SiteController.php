@@ -22,34 +22,6 @@ use app\components\LanguageHelper;
 
 class SiteController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'list', 'index', 'chart', 'main', 'delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                    'delete' => ['post']
-                ],
-            ],
-        ];
-    }
-
     public function actions()
     {
         return [
@@ -379,15 +351,20 @@ class SiteController extends Controller
 
     public function actionDelete($id)
     {
-        $params = Yii::$app->request->queryParams;
-        if (empty($params['MainSearch']['region'])) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        if(\Yii::$app->user->can('site.users')) {
+            $params = Yii::$app->request->queryParams;
+            if (empty($params['MainSearch']['region'])) {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
 
-        $this->findModel($id)->delete();
-        $params = array_merge(["site/index"], $params);
-        $url = Yii::$app->urlManager->createUrl($params);
-        return $this->redirect($url);
+            $this->findModel($id)->delete();
+            $params = array_merge(["site/index"], $params);
+            $url = Yii::$app->urlManager->createUrl($params);
+            return $this->redirect($url);
+        }
+        else {
+            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+        }
     }
 
     protected function findModel($id)
@@ -397,5 +374,9 @@ class SiteController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionUsers(){
+        return $this->render('users');
     }
 }

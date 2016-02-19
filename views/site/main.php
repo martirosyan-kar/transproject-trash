@@ -247,7 +247,9 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
     <div class="clearfix"></div>
 
     <div class="form-group">
+        <?php if (\Yii::$app->user->can('site.main')) { ?>
         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+        <?php } ?>
     </div>
     <?php ActiveForm::end(); ?>
 
