@@ -11,6 +11,7 @@ use app\models\MainTrashRecycle;
 use app\models\MainTrashRelation;
 use app\models\Region;
 use app\models\TrashRecycle;
+use app\models\Type;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -278,11 +279,10 @@ class SiteController extends Controller
         if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
-        if(!empty($params['id'])) {
-            $model = Main::find()->where(['id'=>$params['id']])->one();
+        if (!empty($params['id'])) {
+            $model = Main::find()->where(['id' => $params['id']])->one();
             $arrayParams = ['MainSearch' => ['region' => $model->region]];
-        }
-        else {
+        } else {
             $model = new Main;
             $model->region = $region;
             $arrayParams = ['MainSearch' => ['region' => $region]];
@@ -292,10 +292,10 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if (!$model->isNewRecord) {
-                    MainTrashPlace::deleteAll(['main_id'=>$model->id]);
-                    MainTrashMan::deleteAll(['main_id'=>$model->id]);
-                    MainTrashRelation::deleteAll(['main_id'=>$model->id]);
-                    MainTrashRecycle::deleteAll(['main_id'=>$model->id]);
+                    MainTrashPlace::deleteAll(['main_id' => $model->id]);
+                    MainTrashMan::deleteAll(['main_id' => $model->id]);
+                    MainTrashRelation::deleteAll(['main_id' => $model->id]);
+                    MainTrashRecycle::deleteAll(['main_id' => $model->id]);
                 }
                 $model->save();
                 $main = Yii::$app->request->post()['Main'];
@@ -351,7 +351,7 @@ class SiteController extends Controller
 
     public function actionDelete($id)
     {
-        if(\Yii::$app->user->can('site.users')) {
+        if (\Yii::$app->user->can('site.users')) {
             $params = Yii::$app->request->queryParams;
             if (empty($params['MainSearch']['region'])) {
                 throw new NotFoundHttpException('The requested page does not exist.');
@@ -361,8 +361,7 @@ class SiteController extends Controller
             $params = array_merge(["site/index"], $params);
             $url = Yii::$app->urlManager->createUrl($params);
             return $this->redirect($url);
-        }
-        else {
+        } else {
             throw new ForbiddenHttpException('You are not authorized to perform this action.');
         }
     }
@@ -376,7 +375,23 @@ class SiteController extends Controller
         }
     }
 
-    public function actionUsers(){
+    public function actionUsers()
+    {
         return $this->render('users');
+    }
+
+    public function actionTables()
+    {
+        $params = Yii::$app->request->queryParams;
+        $region = 1;
+        if (!empty($params['MainSearch']['region'])) {
+            $region = $params['MainSearch']['region'];
+        }
+
+        $data = Main::find()->where(['region' => $region])->all();
+        $cities = ArrayHelper::map(City::find()->where(['region' => $region])->orderBy('id')->all(), 'id', 'nameBoth');
+        $types = ArrayHelper::map(Type::find()->orderBy('id')->all(), 'id', 'nameBoth');
+
+        return $this->render('tables', ['data' => $data, 'cities' => $cities, 'types' => $types]);
     }
 }
