@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TrashRelationController implements the CRUD actions for TrashRelation model.
  */
-class TrashRelationController extends Controller
+class TrashRelationController extends PermissionController
 {
     public function behaviors()
     {

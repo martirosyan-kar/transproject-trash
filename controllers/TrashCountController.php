@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TrashCountController implements the CRUD actions for TrashCount model.
  */
-class TrashCountController extends Controller
+class TrashCountController extends PermissionController
 {
     public function behaviors()
     {

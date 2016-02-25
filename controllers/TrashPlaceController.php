@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TrashPlaceController implements the CRUD actions for TrashPlace model.
  */
-class TrashPlaceController extends Controller
+class TrashPlaceController extends PermissionController
 {
     public function behaviors()
     {

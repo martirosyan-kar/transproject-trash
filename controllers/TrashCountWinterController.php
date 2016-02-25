@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TrashCountWinterController implements the CRUD actions for TrashCountWinter model.
  */
-class TrashCountWinterController extends Controller
+class TrashCountWinterController extends PermissionController
 {
     public function behaviors()
     {

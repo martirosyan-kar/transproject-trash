@@ -10,6 +10,7 @@ use app\models\MainTrashPlace;
 use app\models\MainTrashRecycle;
 use app\models\MainTrashRelation;
 use app\models\Region;
+use app\models\TrashPlace;
 use app\models\TrashRecycle;
 use app\models\Type;
 use Yii;
@@ -22,7 +23,7 @@ use app\models\LoginForm;
 use app\components\LanguageHelper;
 
 
-class SiteController extends Controller
+class SiteController extends PermissionController
 {
     public function actions()
     {
@@ -352,7 +353,7 @@ class SiteController extends Controller
 
     public function actionDelete($id)
     {
-        if (\Yii::$app->user->can('site.users')) {
+        if (\Yii::$app->user->can('site.delete')) {
             $params = Yii::$app->request->queryParams;
             if (empty($params['MainSearch']['region'])) {
                 throw new NotFoundHttpException('The requested page does not exist.');
@@ -393,6 +394,20 @@ class SiteController extends Controller
         $cities = ArrayHelper::map(City::find()->where(['region' => $region])->orderBy('id')->all(), 'id', 'nameBoth');
         $types = ArrayHelper::map(Type::find()->orderBy('id')->all(), 'id', 'nameBoth');
 
-        return $this->render('tables', ['data' => $data, 'cities' => $cities, 'types' => $types]);
+        $trashPlaceArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
+        $trashPlaceEng = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name_eng');
+
+        $trashManArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
+        $trashManEng = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name_eng');
+
+        return $this->render('tables', [
+            'data' => $data,
+            'cities' => $cities,
+            'types' => $types,
+            'trashPlaceArm' => $trashPlaceArm,
+            'trashPlaceEng' => $trashPlaceEng,
+            'trashManArm' => $trashManArm,
+            'trashManEng' => $trashManEng,
+        ]);
     }
 }

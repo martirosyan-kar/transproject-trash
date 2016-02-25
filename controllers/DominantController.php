@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * DominantController implements the CRUD actions for Dominant model.
  */
-class DominantController extends Controller
+class DominantController extends PermissionController
 {
     public function behaviors()
     {

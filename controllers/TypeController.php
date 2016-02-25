@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TypeController implements the CRUD actions for Type model.
  */
-class TypeController extends Controller
+class TypeController extends PermissionController
 {
     public function behaviors()
     {

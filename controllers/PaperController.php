@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * PaperController implements the CRUD actions for Paper model.
  */
-class PaperController extends Controller
+class PaperController extends PermissionController
 {
     public function behaviors()
     {
