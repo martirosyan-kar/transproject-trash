@@ -23,7 +23,7 @@ class PermissionController extends Controller
             $permission = $this->id . '.' . $this->action->id;
         }
         if (!\Yii::$app->user->can($permission)) {
-            throw new ForbiddenHttpException('You are not authorized to perform this action.');
+            $this->redirect(['user/security/login']);
         }
         return parent::beforeAction($action);
     }
