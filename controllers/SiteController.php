@@ -12,6 +12,7 @@ use app\models\MainTrashRelation;
 use app\models\Region;
 use app\models\TrashPlace;
 use app\models\TrashRecycle;
+use app\models\TrashRelation;
 use app\models\Type;
 use Yii;
 use yii\filters\AccessControl;
@@ -400,6 +401,12 @@ class SiteController extends PermissionController
         $trashManArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
         $trashManEng = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name_eng');
 
+        $trashRelationArm = ArrayHelper::map(TrashRelation::find()->orderBy('id')->all(), 'id', 'name');
+        $trashRelationEng = ArrayHelper::map(TrashRelation::find()->orderBy('id')->all(), 'id', 'name_eng');
+
+        $trashRecycleArm = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name');
+        $trashRecycleEng = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name_eng');
+
         return $this->render('tables', [
             'data' => $data,
             'cities' => $cities,
@@ -408,6 +415,10 @@ class SiteController extends PermissionController
             'trashPlaceEng' => $trashPlaceEng,
             'trashManArm' => $trashManArm,
             'trashManEng' => $trashManEng,
+            'trashRelationArm' => $trashRelationArm,
+            'trashRelationEng' => $trashRelationEng,
+            'trashRecycleArm' => $trashRecycleArm,
+            'trashRecycleEng' => $trashRecycleEng,
         ]);
     }
 }

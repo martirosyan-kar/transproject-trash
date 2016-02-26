@@ -11,6 +11,8 @@ $incomes = [];
 $disposals = [];
 $who = [];
 $fractions = [];
+$attitudes = [];
+$pilots = [];
 
 foreach ($cities as $cityKey => $city) {
 
@@ -45,6 +47,16 @@ foreach ($cities as $cityKey => $city) {
         for ($i = 1; $i <= 3; $i++) {
             $who[$cityKey][$typeKey]['out_' . $i] = 0;
         }
+
+        //attitude
+        foreach ($trashRelationArm as $key => $value) {
+            $attitudes[$cityKey][$typeKey][$key] = 0;
+        }
+
+        //re-pilot
+        foreach ($trashRecycleArm as $key => $value) {
+            $pilots[$cityKey][$typeKey][$key] = 0;
+        }
     }
     //members total
     for ($i = 1; $i <= 5; $i++) {
@@ -74,6 +86,16 @@ foreach ($cities as $cityKey => $city) {
     }
     for ($i = 1; $i <= 3; $i++) {
         $who[$cityKey]['total']['out_' . $i] = 0;
+    }
+
+    //attitude total
+    foreach ($trashRelationArm as $key => $value) {
+        $attitudes[$cityKey]['total'][$key] = 0;
+    }
+
+    //re-pilot total
+    foreach ($trashRecycleArm as $key => $value) {
+        $pilots[$cityKey]['total'][$key] = 0;
     }
 }
 $types['total'] = 'Ընդամենը<br>Total';
@@ -154,6 +176,24 @@ foreach ($data as $value) {
     else {
         $who[$value->city][$value->type]['out_3']++;
         $who[$value->city]['total']['out_3']++;
+    }
+
+    //attitude
+    $trashRelationData = $value->mainTrashRelations;
+    if (!empty($trashRelationData)) {
+        foreach ($trashRelationData as $relationValue) {
+            $attitudes[$value->city][$value->type][$relationValue->trash_relation_id]++;
+            $attitudes[$value->city]['total'][$relationValue->trash_relation_id]++;
+        }
+    }
+
+    //re-pilot
+    $trashRecycleData = $value->mainTrashRecycles;
+    if (!empty($trashRecycleData)) {
+        foreach ($trashRecycleData as $recycleValue) {
+            $pilots[$value->city][$value->type][$recycleValue->trash_recycle_id]++;
+            $pilots[$value->city]['total'][$recycleValue->trash_recycle_id]++;
+        }
     }
 }
 
@@ -350,7 +390,131 @@ foreach ($data as $value) {
             } ?>
         </table>
     </div>
-    <div role="tabpanel" class="tab-pane" id="fractions">...4</div>
-    <div role="tabpanel" class="tab-pane" id="attitude">...5</div>
-    <div role="tabpanel" class="tab-pane" id="re-pilot">...6</div>
+    <div role="tabpanel" class="tab-pane" id="fractions">
+        <table class="table table-bordered">
+            <tr>
+                <th rowspan="2">Համայնքի անուն</th>
+                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
+                <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում թափված աղբի քանակի (դույլ կամ տոպրակ)</th>
+                <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի</th>
+                <th colspan="2">Տնային տնտեսության քանակը ըստ թղթի թափման քանակի</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2-3 հատ</td>
+                <td>4-5 հատ</td>
+                <td>6 և ավելի</td>
+                <td>Պլաստիկ շշեր 0,5-1լ</td>
+                <td>Պլաստիկ շշեր 1,5-2լ</td>
+                <td>Պոլիէթիլենային տոպրակ</td>
+                <td>Ապակե տարաներ/շշեր</td>
+                <td>Շատ</td>
+                <td>Ոչ շատ</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Community name</td>
+                <td rowspan="2">Households covered by the survey</td>
+                <th colspan="4">Number of households per number of bags/buckets of household waste disposed of per week</th>
+                <th colspan="4">Number of households per number of packaging waste items generated per week
+                    in summer</th>
+                <th colspan="2">Number of households per typical amount of paper/cardboard in waste</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2-3 pcs</td>
+                <td>4-5 pcs</td>
+                <td>6 or more pcs</td>
+                <td>Plastic bottles 0.5-1 L</td>
+                <td>Plastic bottles 1.5-2 L</td>
+                <td>Plastic bags</td>
+                <td>Glass bottles/ jars</td>
+                <td>Much</td>
+                <td>Not much</td>
+            </tr>
+            <?php foreach ($fractions as $city => $value) {
+                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
+                foreach ($value as $typeKey => $typeValue) {
+                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
+                    echo '<td>' . $types[$typeKey] . '</td>';
+                    foreach ($typeValue as $column) { ?>
+                        <td><?= $column; ?></td>
+                    <?php }
+                    echo '</tr>';
+
+                }
+            } ?>
+        </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="attitude">
+        <table class="table table-bordered">
+            <tr>
+                <th rowspan="2">Համայնքի անուն</th>
+                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
+                <th colspan="<?= count($trashRelationArm) ?>">Տնային տնտեսության քանակը ըստ վերաբերմունքի</th>
+            </tr>
+            <tr>
+                <?php foreach ($trashRelationArm as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <td rowspan="2">Community name</td>
+                <td rowspan="2">Households covered by the survey</td>
+                <th colspan="<?= count($trashRelationEng) ?>">Number of households per attitude pattern</th>
+            </tr>
+            <tr>
+                <?php foreach ($trashRelationEng as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+            </tr>
+            <?php foreach ($attitudes as $city => $value) {
+                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
+                foreach ($value as $typeKey => $typeValue) {
+                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
+                    echo '<td>' . $types[$typeKey] . '</td>';
+                    foreach ($typeValue as $column) { ?>
+                        <td><?= $column; ?></td>
+                    <?php }
+                    echo '</tr>';
+
+                }
+            } ?>
+        </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="re-pilot">
+        <table class="table table-bordered">
+            <tr>
+                <th rowspan="2">Համայնքի անուն</th>
+                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
+                <th colspan="<?= count($trashRecycleArm) ?>">Տնային տնտեսության քանակը որոնք պատրաստեն փորձելու հավաքել առանձին հետագա վերամշակման համար ըստ ֆրակցիաներ</th>
+            </tr>
+            <tr>
+                <?php foreach ($trashRecycleArm as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <td rowspan="2">Community name</td>
+                <td rowspan="2">Households covered by the survey</td>
+                <th colspan="<?= count($trashRecycleEng) ?>">Number of households ready to experiment re separate collection of recyclables per fraction</th>
+            </tr>
+            <tr>
+                <?php foreach ($trashRecycleEng as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+            </tr>
+            <?php foreach ($pilots as $city => $value) {
+                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
+                foreach ($value as $typeKey => $typeValue) {
+                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
+                    echo '<td>' . $types[$typeKey] . '</td>';
+                    foreach ($typeValue as $column) { ?>
+                        <td><?= $column; ?></td>
+                    <?php }
+                    echo '</tr>';
+
+                }
+            } ?>
+        </table>
+    </div>
 </div>
