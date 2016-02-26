@@ -5,6 +5,7 @@
  * Date: 2/23/16
  * Time: 11:53 PM
  */
+use app\components\LanguageHelper;
 
 $members = [];
 $incomes = [];
@@ -198,7 +199,10 @@ foreach ($data as $value) {
 }
 
 //echo "<pre>"; print_r($disposals);exit();
+$arrayParams = ['MainSearch' => ['region' => $region]];
+$indexLink = LanguageHelper::getLinks('index', $arrayParams);
 ?>
+<h3><a href="<?= $indexLink['url']; ?>"><?= $indexLink['label']; ?></a></h3>
 
 <ul class="nav nav-tabs">
     <li role="presentation" class="active"><a href="#members" role="tab" data-toggle="tab">Members</a></li>

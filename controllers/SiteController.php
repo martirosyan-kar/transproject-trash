@@ -409,6 +409,7 @@ class SiteController extends PermissionController
 
         return $this->render('tables', [
             'data' => $data,
+            'region' => $region,
             'cities' => $cities,
             'types' => $types,
             'trashPlaceArm' => $trashPlaceArm,
