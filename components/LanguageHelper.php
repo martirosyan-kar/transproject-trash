@@ -98,6 +98,10 @@ class LanguageHelper
                 'label' => 'Գրաֆիկներ (Charts)',
                 'url' => '/site/chart'
             ],
+            'table' => [
+                'label' => 'Հաշվետվություններ (Reports)',
+                'url' => '/site/tables'
+            ],
             'index' => [
                 'label' => 'Վերադառնալ (Back)',
                 'url' => '/site/index'

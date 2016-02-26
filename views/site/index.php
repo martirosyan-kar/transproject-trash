@@ -23,6 +23,7 @@ use app\models\Main;
 $this->title = 'Trash: Data';
 $arrayParams = ['MainSearch' => ['region' => $region]];
 $chartLink = LanguageHelper::getLinks('chart', $arrayParams);
+$tableLink = LanguageHelper::getLinks('table', $arrayParams);
 $addLink = LanguageHelper::getLinks('add', $arrayParams);
 $model = new Main;
 $width = '300px';
@@ -35,8 +36,10 @@ $width = '300px';
         padding: 3px !important;
     }
 </style>
-<h3><a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;<a
-        href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
+<h3>
+    <a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;
+    <a class="btn btn-primary" href="<?= $tableLink['url']; ?>"><?= $tableLink['label']; ?></a>&nbsp;
+    <a href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
 <div class="site-index" style="width: 3500px;">
 
     <?= GridView::widget([
