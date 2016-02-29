@@ -10,6 +10,8 @@ use app\models\MainTrashPlace;
 use app\models\MainTrashRecycle;
 use app\models\MainTrashRelation;
 use app\models\Region;
+use app\models\TrashCountSummer;
+use app\models\TrashCountWinter;
 use app\models\TrashPlace;
 use app\models\TrashRecycle;
 use app\models\TrashRelation;
@@ -407,6 +409,11 @@ class SiteController extends PermissionController
         $trashRecycleArm = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name');
         $trashRecycleEng = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name_eng');
 
+        $trashCountSummerArm = ArrayHelper::map(TrashCountSummer::find()->orderBy('id')->all(), 'id', 'name');
+        $trashCountSummerEng = ArrayHelper::map(TrashCountSummer::find()->orderBy('id')->all(), 'id', 'name_eng');
+        $trashCountWinterArm = ArrayHelper::map(TrashCountWinter::find()->orderBy('id')->all(), 'id', 'name');
+        $trashCountWinterEng = ArrayHelper::map(TrashCountWinter::find()->orderBy('id')->all(), 'id', 'name_eng');
+
         return $this->render('tables', [
             'data' => $data,
             'region' => $region,
@@ -420,6 +427,11 @@ class SiteController extends PermissionController
             'trashRelationEng' => $trashRelationEng,
             'trashRecycleArm' => $trashRecycleArm,
             'trashRecycleEng' => $trashRecycleEng,
+
+            'trashCountSummerArm' => $trashCountSummerArm,
+            'trashCountSummerEng' => $trashCountSummerEng,
+            'trashCountWinterArm' => $trashCountWinterArm,
+            'trashCountWinterEng' => $trashCountWinterEng,
         ]);
     }
 }

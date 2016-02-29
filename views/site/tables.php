@@ -49,6 +49,16 @@ foreach ($cities as $cityKey => $city) {
             $who[$cityKey][$typeKey]['out_' . $i] = 0;
         }
 
+        //fractions
+        foreach ($trashCountSummerArm as $key => $value) {
+            $field = 'summer_count_'.$key;
+            $fractions[$cityKey][$typeKey][$field] = 0;
+        }
+        foreach ($trashCountWinterArm as $key => $value) {
+            $field = 'winter_count_'.$key;
+            $fractions[$cityKey][$typeKey][$field] = 0;
+        }
+
         //attitude
         foreach ($trashRelationArm as $key => $value) {
             $attitudes[$cityKey][$typeKey][$key] = 0;
@@ -89,6 +99,16 @@ foreach ($cities as $cityKey => $city) {
         $who[$cityKey]['total']['out_' . $i] = 0;
     }
 
+    //fractions
+    foreach ($trashCountSummerArm as $key => $value) {
+        $field = 'summer_count_'.$key;
+        $fractions[$cityKey]['total'][$field] = 0;
+    }
+    foreach ($trashCountWinterArm as $key => $value) {
+        $field = 'winter_count_'.$key;
+        $fractions[$cityKey]['total'][$field] = 0;
+    }
+
     //attitude total
     foreach ($trashRelationArm as $key => $value) {
         $attitudes[$cityKey]['total'][$key] = 0;
@@ -100,7 +120,7 @@ foreach ($cities as $cityKey => $city) {
     }
 }
 $types['total'] = 'Ընդամենը<br>Total';
-//echo '<pre>'; print_r($disposals);exit();
+//echo '<pre>'; print_r($fractions);exit();
 foreach ($data as $value) {
     //members
     if ($value->resident >= 1) {
@@ -177,6 +197,18 @@ foreach ($data as $value) {
     else {
         $who[$value->city][$value->type]['out_3']++;
         $who[$value->city]['total']['out_3']++;
+    }
+
+    //fractions
+    foreach ($trashCountSummerArm as $countKey => $countValue) {
+        $field = 'summer_count_'.$countKey;
+        $fractions[$cityKey][$typeKey][$field] += $value->$field;
+        $fractions[$cityKey]['total'][$field] += $value->$field;
+    }
+    foreach ($trashCountWinterArm as $countKey => $countValue) {
+        $field = 'winter_count_'.$countKey;
+        $fractions[$cityKey][$typeKey][$field] += $value->$field;
+        $fractions[$cityKey]['total'][$field] += $value->$field;
     }
 
     //attitude
@@ -400,7 +432,8 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
                 <th rowspan="2">Համայնքի անուն</th>
                 <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
                 <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում թափված աղբի քանակի (դույլ կամ տոպրակ)</th>
-                <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի</th>
+                <th colspan="<?= count($trashCountSummerArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի (Ամռանը)</th>
+                <th colspan="<?= count($trashCountWinterArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի (Ձմռանը)</th>
                 <th colspan="2">Տնային տնտեսության քանակը ըստ թղթի թափման քանակի</th>
             </tr>
             <tr>
@@ -408,10 +441,12 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
                 <td>2-3 հատ</td>
                 <td>4-5 հատ</td>
                 <td>6 և ավելի</td>
-                <td>Պլաստիկ շշեր 0,5-1լ</td>
-                <td>Պլաստիկ շշեր 1,5-2լ</td>
-                <td>Պոլիէթիլենային տոպրակ</td>
-                <td>Ապակե տարաներ/շշեր</td>
+                <?php foreach ($trashCountSummerArm as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+                <?php foreach ($trashCountWinterArm as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
                 <td>Շատ</td>
                 <td>Ոչ շատ</td>
             </tr>
@@ -419,8 +454,10 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
                 <td rowspan="2">Community name</td>
                 <td rowspan="2">Households covered by the survey</td>
                 <th colspan="4">Number of households per number of bags/buckets of household waste disposed of per week</th>
-                <th colspan="4">Number of households per number of packaging waste items generated per week
+                <th colspan="<?= count($trashCountSummerEng); ?>">Number of households per number of packaging waste items generated per week
                     in summer</th>
+                <th colspan="<?= count($trashCountWinterEng); ?>">Number of households per number of packaging waste items generated per week
+                    in winter</th>
                 <th colspan="2">Number of households per typical amount of paper/cardboard in waste</th>
             </tr>
             <tr>
@@ -428,10 +465,12 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
                 <td>2-3 pcs</td>
                 <td>4-5 pcs</td>
                 <td>6 or more pcs</td>
-                <td>Plastic bottles 0.5-1 L</td>
-                <td>Plastic bottles 1.5-2 L</td>
-                <td>Plastic bags</td>
-                <td>Glass bottles/ jars</td>
+                <?php foreach ($trashCountSummerEng as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
+                <?php foreach ($trashCountWinterEng as $value) { ?>
+                    <td><?= $value ?></td>
+                <?php } ?>
                 <td>Much</td>
                 <td>Not much</td>
             </tr>
