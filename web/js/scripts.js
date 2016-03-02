@@ -15,4 +15,24 @@ $(function () {
         });
         $('#main-resident').val(sum);
     });
+
+    $(document).on('click', '#main-recycles label input', function () {
+        var child = $(this);
+        var value = $(this).val();
+        if (value == 12) {
+            if ($(child).prop('checked') === true) {
+                $('#rubberSection').removeClass('hidden');
+            }
+            else {
+                $('#rubberSection').addClass('hidden');
+            }
+        }
+    });
+
+    var inputs = $('#main-recycles label input:checked');
+    $.each(inputs, function (key, input) {
+        if ($(input).val() == 12) {
+            $('#rubberSection').removeClass('hidden');
+        }
+    });
 });

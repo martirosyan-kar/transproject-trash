@@ -12,6 +12,7 @@ use app\models\TrashMan;
 use app\models\Paper;
 use app\models\TrashRelation;
 use app\models\TrashRecycle;
+use app\models\RubberItems;
 use app\models\Person;
 use yii\web\JqueryAsset;
 
@@ -208,7 +209,23 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
         ->label(null, ['class' => 'col-sm-12']); ?>
 
     <div class="clearfix"></div>
+
     <hr>
+    <div id="rubberSection" class="hidden">
+    <?= $form->field($model, 'rubberItemsData',
+        ['options' => ['class' => 'form-inline col-sm-12']])
+        ->checkboxList(
+            ArrayHelper::map(RubberItems::find()->all(),
+                'id', 'nameBoth'), [
+                'class' => 'radio col-sm-8',
+                'separator' => '<br>',
+            ]
+        )
+        ->label(null, ['class' => 'col-sm-4']); ?>
+
+    <div class="clearfix"></div>
+    <hr>
+    </div>
 
     <?= $form->field($model, 'answer_count',
         ['options' => ['class' => 'form-inline col-sm-6']])

@@ -54,6 +54,7 @@ use yii\helpers\ArrayHelper;
  * @property MainTrashMan[] $mainTrashMen
  * @property MainTrashRecycle[] $mainTrashRecycles
  * @property MainTrashRelation[] $mainTrashRelations
+ * @property MainRubberItems[] $mainRubberItems
  *
  * @property trashPlaceMulti
  */
@@ -63,6 +64,7 @@ class Main extends \yii\db\ActiveRecord
     public $men = [];
     public $relations = [];
     public $recycles = [];
+    public $rubberItemsData = [];
 
     /**
      * @inheritdoc
@@ -141,6 +143,8 @@ class Main extends \yii\db\ActiveRecord
             'paper' => 'Թուղթ',
             'relations' => 'Ինչպես եք վերաբերվում աղբի խնդրին',
             'mainTrashRecycles.trash_recycle_id' => 'Վերամշակման փորձ',
+            'mainRubberItems.rubber_item_id' => 'Ռետինե իրեր',
+            'rubber_items' => 'Ռետինե իրեր',
             'mainTrashRelations.trash_relation_id' => 'Ինչպես եք վերաբերվում աղբի խնդրին',
             'mainTrashPlaces.trash_place_id' => 'Սովորաբար որտեղ եք նետում աղբը',
             'mainTrashMen.trash_man_id' => 'Ով է սովորաբար նետում աղբը Ձեր տանը',
@@ -330,6 +334,26 @@ class Main extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TrashRelation::className(), ['id' => 'trash_relation_id'])
             ->viaTable('main_trash_relation', ['main_id' => 'id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMainRubberItems()
+    {
+        return $this->hasMany(MainRubberItems::className(), ['main_id' => 'id']);
+    }
+
+    public function getRubberItemsMulti()
+    {
+        return implode(', ', ArrayHelper::map($this->rubberItems, 'id', 'nameBoth'));
+    }
+
+    public function getRubberItems()
+    {
+        return $this->hasMany(RubberItems::className(), ['id' => 'rubber_item_id'])
+            ->viaTable('main_rubber_items', ['main_id' => 'id']);
     }
 
     public function getLabel($attribute)

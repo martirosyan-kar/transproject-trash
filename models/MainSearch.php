@@ -36,6 +36,7 @@ class MainSearch extends Main
                     'mainTrashMen.trash_man_id',
                     'mainTrashRecycles.trash_recycle_id',
                     'mainTrashRelations.trash_relation_id',
+                    'mainRubberItems.rubber_item_id',
                     'filter_summer_1',
                     'filter_summer_2',
                     'filter_summer_3',
@@ -83,6 +84,7 @@ class MainSearch extends Main
             'mainTrashMen.trash_man_id',
             'mainTrashRecycles.trash_recycle_id',
             'mainTrashRelations.trash_relation_id',
+            'mainRubberItems.rubber_item_id',
             'filter_summer_1',
             'filter_summer_2',
             'filter_summer_3',
@@ -117,7 +119,7 @@ class MainSearch extends Main
         if (empty($this->region)) {
             $this->region = 1;
         }
-        $query = Main::find()->joinWith(['mainTrashPlaces', 'mainTrashMen', 'mainTrashRecycles', 'mainTrashRelations']);
+        $query = Main::find()->joinWith(['mainTrashPlaces', 'mainTrashMen', 'mainTrashRecycles', 'mainTrashRelations', 'mainRubberItems']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -157,6 +159,7 @@ class MainSearch extends Main
             'main_trash_man.trash_man_id' => $this->getAttribute('men'),
             'main_trash_recycle.trash_recycle_id' => $this->getAttribute('recycles'),
             'main_trash_relation.trash_relation_id' => $this->getAttribute('relations'),
+            'main_rubber_items.rubber_item_id' => $this->getAttribute('rubber_items'),
         ]);
         $query = $this->addBetween($query);
 

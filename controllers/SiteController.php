@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\City;
 use app\models\Main;
+use app\models\MainRubberItems;
 use app\models\MainSearch;
 use app\models\MainTrashMan;
 use app\models\MainTrashPlace;
@@ -301,6 +302,7 @@ class SiteController extends PermissionController
                     MainTrashMan::deleteAll(['main_id' => $model->id]);
                     MainTrashRelation::deleteAll(['main_id' => $model->id]);
                     MainTrashRecycle::deleteAll(['main_id' => $model->id]);
+                    MainRubberItems::deleteAll(['main_id' => $model->id]);
                 }
                 $model->save();
                 $main = Yii::$app->request->post()['Main'];
@@ -336,6 +338,14 @@ class SiteController extends PermissionController
                         $relationModel->save();
                     }
                 }
+                if (!empty($main['rubberItemsData'])) {
+                    foreach ($main['rubberItemsData'] as $value) {
+                        $relationModel = new MainRubberItems();
+                        $relationModel->main_id = $model->id;
+                        $relationModel->rubber_item_id = $value;
+                        $relationModel->save();
+                    }
+                }
                 $arrayParams['id'] = $model->id;
                 $params = array_merge(["site/index"], $arrayParams);
                 $url = Yii::$app->urlManager->createUrl($params);
@@ -347,6 +357,7 @@ class SiteController extends PermissionController
         $model->men = ArrayHelper::getColumn($model->mainTrashMen, 'trash_man_id');
         $model->relations = ArrayHelper::getColumn($model->mainTrashRelations, 'trash_relation_id');
         $model->recycles = ArrayHelper::getColumn($model->mainTrashRecycles, 'trash_recycle_id');
+        $model->rubberItemsData = ArrayHelper::getColumn($model->mainRubberItems, 'rubber_item_id');
 
         return $this->render('main', [
             'model' => $model,

@@ -86,7 +86,11 @@ class LanguageHelper
             'Person' => [
                 'Հարցումը անցկացրեց',
                 'The interviewer name'
-            ]
+            ],
+            'RubberItems' => [
+                'Ռետինե իրեր',
+                'Rubber items'
+            ],
         ];
     }
 

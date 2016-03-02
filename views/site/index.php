@@ -17,6 +17,7 @@ use app\models\TrashRecycle;
 use app\models\Person;
 use app\components\LanguageHelper;
 use app\models\Main;
+use app\models\RubberItems;
 
 /* @var $this yii\web\View */
 
@@ -212,6 +213,14 @@ $width = '300px';
                 'value' => 'trashRecycleMulti',
                 'filter' => Html::activeDropDownList($searchModel, 'mainTrashRecycles.trash_recycle_id',
                     ArrayHelper::map(TrashRecycle::find()->all(), 'id', 'nameBothShort'),
+                    ['class' => 'form-control', 'prompt' => 'Select Category']),
+                //'contentOptions'=>['style'=>'width: 120px;']
+            ],
+            [
+                'attribute' => 'mainRubberItems.rubber_item_id',
+                'value' => 'rubberItemsMulti',
+                'filter' => Html::activeDropDownList($searchModel, 'mainRubberItems.rubber_item_id',
+                    ArrayHelper::map(RubberItems::find()->all(), 'id', 'nameBoth'),
                     ['class' => 'form-control', 'prompt' => 'Select Category']),
                 //'contentOptions'=>['style'=>'width: 120px;']
             ],
