@@ -420,6 +420,7 @@ class SiteController extends PermissionController
         $trashRecycleArm = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name');
         $trashRecycleEng = ArrayHelper::map(TrashRecycle::find()->orderBy('id')->all(), 'id', 'name_eng');
 
+
         $trashCountSummerArm = ArrayHelper::map(TrashCountSummer::find()->orderBy('id')->all(), 'id', 'name');
         $trashCountSummerEng = ArrayHelper::map(TrashCountSummer::find()->orderBy('id')->all(), 'id', 'name_eng');
         $trashCountWinterArm = ArrayHelper::map(TrashCountWinter::find()->orderBy('id')->all(), 'id', 'name');

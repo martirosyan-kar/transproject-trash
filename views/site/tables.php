@@ -50,13 +50,19 @@ foreach ($cities as $cityKey => $city) {
         }
 
         //fractions
+        for ($i = 1; $i <= 4; $i++) {
+            $fractions[$cityKey][$typeKey]['trash_count_' . $i] = 0;
+        }
         foreach ($trashCountSummerArm as $key => $value) {
-            $field = 'summer_count_'.$key;
+            $field = 'summer_count_' . $key;
             $fractions[$cityKey][$typeKey][$field] = 0;
         }
         foreach ($trashCountWinterArm as $key => $value) {
-            $field = 'winter_count_'.$key;
+            $field = 'winter_count_' . $key;
             $fractions[$cityKey][$typeKey][$field] = 0;
+        }
+        for ($i = 1; $i <= 2; $i++) {
+            $fractions[$cityKey][$typeKey]['paper_' . $i] = 0;
         }
 
         //attitude
@@ -100,13 +106,19 @@ foreach ($cities as $cityKey => $city) {
     }
 
     //fractions
+    for ($i = 1; $i <= 4; $i++) {
+        $fractions[$cityKey]['total']['trash_count_' . $i] = 0;
+    }
     foreach ($trashCountSummerArm as $key => $value) {
-        $field = 'summer_count_'.$key;
+        $field = 'summer_count_' . $key;
         $fractions[$cityKey]['total'][$field] = 0;
     }
     foreach ($trashCountWinterArm as $key => $value) {
-        $field = 'winter_count_'.$key;
+        $field = 'winter_count_' . $key;
         $fractions[$cityKey]['total'][$field] = 0;
+    }
+    for ($i = 1; $i <= 2; $i++) {
+        $fractions[$cityKey]['total']['paper_' . $i] = 0;
     }
 
     //attitude total
@@ -119,6 +131,7 @@ foreach ($cities as $cityKey => $city) {
         $pilots[$cityKey]['total'][$key] = 0;
     }
 }
+
 $types['total'] = 'Ընդամենը<br>Total';
 //echo '<pre>'; print_r($fractions);exit();
 foreach ($data as $value) {
@@ -186,29 +199,47 @@ foreach ($data as $value) {
         }
     }
 
-    if($value->trash_out <= 1) {
+    if ($value->trash_out <= 1) {
         $who[$value->city][$value->type]['out_1']++;
         $who[$value->city]['total']['out_1']++;
-    }
-    elseif($value->trash_out >=2 && $value->trash_out <= 3) {
+    } elseif ($value->trash_out >= 2 && $value->trash_out <= 3) {
         $who[$value->city][$value->type]['out_2']++;
         $who[$value->city]['total']['out_2']++;
-    }
-    else {
+    } else {
         $who[$value->city][$value->type]['out_3']++;
         $who[$value->city]['total']['out_3']++;
     }
 
     //fractions
+    if ($value->trash_count == 1) {
+        $fractions[$value->city][$value->type]['trash_count_1']++;
+        $fractions[$value->city]['total']['trash_count_1']++;
+    } elseif ($value->trash_count >= 2 && $value->trash_count <= 3) {
+        $fractions[$value->city][$value->type]['trash_count_2']++;
+        $fractions[$value->city]['total']['trash_count_2']++;
+    } elseif ($value->trash_count >= 4 && $value->trash_count <= 5) {
+        $fractions[$value->city][$value->type]['trash_count_3']++;
+        $fractions[$value->city]['total']['trash_count_3']++;
+    } elseif ($value->trash_count >= 6) {
+        $fractions[$value->city][$value->type]['trash_count_4']++;
+        $fractions[$value->city]['total']['trash_count_4']++;
+    }
     foreach ($trashCountSummerArm as $countKey => $countValue) {
-        $field = 'summer_count_'.$countKey;
-        $fractions[$cityKey][$typeKey][$field] += $value->$field;
-        $fractions[$cityKey]['total'][$field] += $value->$field;
+        $field = 'summer_count_' . $countKey;
+        $fractions[$value->city][$typeKey][$field] += $value->$field;
+        $fractions[$value->city]['total'][$field] += $value->$field;
     }
     foreach ($trashCountWinterArm as $countKey => $countValue) {
-        $field = 'winter_count_'.$countKey;
-        $fractions[$cityKey][$typeKey][$field] += $value->$field;
-        $fractions[$cityKey]['total'][$field] += $value->$field;
+        $field = 'winter_count_' . $countKey;
+        $fractions[$value->city][$typeKey][$field] += $value->$field;
+        $fractions[$value->city]['total'][$field] += $value->$field;
+    }
+    if ($value->paper == 1) {
+        $fractions[$value->city][$value->type]['paper_1']++;
+        $fractions[$value->city]['total']['paper_1']++;
+    } elseif ($value->paper == 2) {
+        $fractions[$value->city][$value->type]['paper_2']++;
+        $fractions[$value->city]['total']['paper_2']++;
     }
 
     //attitude
@@ -432,8 +463,12 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
                 <th rowspan="2">Համայնքի անուն</th>
                 <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
                 <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում թափված աղբի քանակի (դույլ կամ տոպրակ)</th>
-                <th colspan="<?= count($trashCountSummerArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի (Ամռանը)</th>
-                <th colspan="<?= count($trashCountWinterArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի (Ձմռանը)</th>
+                <th colspan="<?= count($trashCountSummerArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի
+                    (Ամռանը)
+                </th>
+                <th colspan="<?= count($trashCountWinterArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի
+                    (Ձմռանը)
+                </th>
                 <th colspan="2">Տնային տնտեսության քանակը ըստ թղթի թափման քանակի</th>
             </tr>
             <tr>
@@ -453,11 +488,17 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
             <tr>
                 <td rowspan="2">Community name</td>
                 <td rowspan="2">Households covered by the survey</td>
-                <th colspan="4">Number of households per number of bags/buckets of household waste disposed of per week</th>
-                <th colspan="<?= count($trashCountSummerEng); ?>">Number of households per number of packaging waste items generated per week
-                    in summer</th>
-                <th colspan="<?= count($trashCountWinterEng); ?>">Number of households per number of packaging waste items generated per week
-                    in winter</th>
+                <th colspan="4">Number of households per number of bags/buckets of household waste disposed of per
+                    week
+                </th>
+                <th colspan="<?= count($trashCountSummerEng); ?>">Number of households per number of packaging waste
+                    items generated per week
+                    in summer
+                </th>
+                <th colspan="<?= count($trashCountWinterEng); ?>">Number of households per number of packaging waste
+                    items generated per week
+                    in winter
+                </th>
                 <th colspan="2">Number of households per typical amount of paper/cardboard in waste</th>
             </tr>
             <tr>
@@ -529,7 +570,9 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
             <tr>
                 <th rowspan="2">Համայնքի անուն</th>
                 <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="<?= count($trashRecycleArm) ?>">Տնային տնտեսության քանակը որոնք պատրաստեն փորձելու հավաքել առանձին հետագա վերամշակման համար ըստ ֆրակցիաներ</th>
+                <th colspan="<?= count($trashRecycleArm) ?>">Տնային տնտեսության քանակը որոնք պատրաստեն փորձելու հավաքել
+                    առանձին հետագա վերամշակման համար ըստ ֆրակցիաներ
+                </th>
             </tr>
             <tr>
                 <?php foreach ($trashRecycleArm as $value) { ?>
@@ -539,7 +582,9 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
             <tr>
                 <td rowspan="2">Community name</td>
                 <td rowspan="2">Households covered by the survey</td>
-                <th colspan="<?= count($trashRecycleEng) ?>">Number of households ready to experiment re separate collection of recyclables per fraction</th>
+                <th colspan="<?= count($trashRecycleEng) ?>">Number of households ready to experiment re separate
+                    collection of recyclables per fraction
+                </th>
             </tr>
             <tr>
                 <?php foreach ($trashRecycleEng as $value) { ?>
