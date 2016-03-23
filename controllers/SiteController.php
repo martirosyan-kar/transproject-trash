@@ -403,6 +403,9 @@ class SiteController extends PermissionController
         if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
+        if (empty($params['excel'])) {
+            $params['excel'] = false;
+        }
 
         $data = Main::find()->where(['region' => $region])->all();
         $cities = ArrayHelper::map(City::find()->where(['region' => $region])->orderBy('id')->all(), 'id', 'nameBoth');
