@@ -5,7 +5,6 @@
  * Date: 2/23/16
  * Time: 11:53 PM
  */
-use app\components\LanguageHelper;
 
 $members = [];
 $incomes = [];
@@ -14,10 +13,9 @@ $who = [];
 $fractions = [];
 $attitudes = [];
 $pilots = [];
+$tables = [];
 
 foreach ($cities as $cityKey => $city) {
-
-
     foreach ($types as $typeKey => $type) {
         //Members
         for ($i = 1; $i <= 5; $i++) {
@@ -226,13 +224,13 @@ foreach ($data as $value) {
     }
     foreach ($trashCountSummerArm as $countKey => $countValue) {
         $field = 'summer_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field] += $value->$field;
-        $fractions[$value->city]['total'][$field] += $value->$field;
+        $fractions[$value->city][$typeKey][$field] ++;
+        $fractions[$value->city]['total'][$field] ++;
     }
     foreach ($trashCountWinterArm as $countKey => $countValue) {
         $field = 'winter_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field] += $value->$field;
-        $fractions[$value->city]['total'][$field] += $value->$field;
+        $fractions[$value->city][$typeKey][$field] ++;
+        $fractions[$value->city]['total'][$field] ++;
     }
     if ($value->paper == 1) {
         $fractions[$value->city][$value->type]['paper_1']++;
@@ -262,347 +260,99 @@ foreach ($data as $value) {
 }
 
 //echo "<pre>"; print_r($disposals);exit();
-$arrayParams = ['MainSearch' => ['region' => $region]];
-$indexLink = LanguageHelper::getLinks('index', $arrayParams);
-?>
-<h3><a href="<?= $indexLink['url']; ?>"><?= $indexLink['label']; ?></a></h3>
 
-<ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#members" role="tab" data-toggle="tab">Members</a></li>
-    <li role="presentation"><a href="#income" role="tab" data-toggle="tab">Income</a></li>
-    <li role="presentation"><a href="#disposal" role="tab" data-toggle="tab">Disposal</a></li>
-    <li role="presentation"><a href="#who" role="tab" data-toggle="tab">Who</a></li>
-    <li role="presentation"><a href="#fractions" role="tab" data-toggle="tab">Fractions</a></li>
-    <li role="presentation"><a href="#attitude" role="tab" data-toggle="tab">Attitude</a></li>
-    <li role="presentation"><a href="#re-pilot" role="tab" data-toggle="tab">Re-pilot</a></li>
-</ul>
 
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="members">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="5">Տնային տնտեսության քանակը ըստ բնակիչների քանակի</th>
-                <th rowspan="2">Կնոջ գլխավորու-թյամբ տնային տնտեսության քանակը</th>
-                <th colspan="5">Տնային տնտեսության քանակ ըստ երեխաների քանակի</th>
-            </tr>
-            <tr>
-                <td>1 բնակիչ</td>
-                <td>2 բնակիչ</td>
-                <td>3 բնակիչ</td>
-                <td>5 բնակիչ</td>
-                <td>5 և ավելի բնակիչ-ներ</td>
-                <td>1 երեխա</td>
-                <td>2 երեխա</td>
-                <td>3 երեխա</td>
-                <td>4 երեխա</td>
-                <td>5 և ավելի երեխաներ</td>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <td colspan="5">Number of households with number of members</td>
-                <td rowspan="2">Number of female headed households</td>
-                <td colspan="5">Number of households with number of children</td>
-            </tr>
-            <tr>
-                <td>1 member</td>
-                <td>2 members</td>
-                <td>3 members</td>
-                <td>4 members</td>
-                <td>Above 5 members</td>
-                <td>1 child</td>
-                <td>2 child</td>
-                <td>3 child</td>
-                <td>4 child</td>
-                <td>5 and more children</td>
-            </tr>
-            <?php foreach ($members as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
+$tabs = [
+    [
+        'id' => 'members',
+        'value' => 'Members',
+        'view' => 'members',
+        'params' => [
+            'members' => $members,
+            'cities' => $cities,
+            'types' => $types
+        ]
+    ],
+    [
+        'id' => 'income',
+        'value' => 'Income',
+        'view' => 'income',
+        'params' => [
+            'incomes' => $incomes,
+            'cities' => $cities,
+            'types' => $types
+        ]
+    ],
+    [
+        'id' => 'disposal',
+        'value' => 'Disposal',
+        'view' => 'disposal',
+        'params' => [
+            'disposals' => $disposals,
+            'cities' => $cities,
+            'types' => $types,
+            'trashPlaceArm' => $trashPlaceArm,
+            'trashPlaceEng' => $trashPlaceEng
+        ]
+    ],
+    [
+        'id' => 'who',
+        'value' => 'Who',
+        'view' => 'who',
+        'params' => [
+            'who' => $who,
+            'cities' => $cities,
+            'types' => $types,
+            'trashManArm' => $trashManArm,
+            'trashManEng' => $trashManEng
+        ]
+    ],
+    [
+        'id' => 'fractions',
+        'value' => 'Fractions',
+        'view' => 'fractions',
+        'params' => [
+            'fractions' => $fractions,
+            'cities' => $cities,
+            'types' => $types,
+            'trashCountSummerArm' => $trashCountSummerArm,
+            'trashCountWinterArm' => $trashCountWinterArm,
+            'trashCountSummerEng' => $trashCountSummerEng,
+            'trashCountWinterEng' => $trashCountWinterEng
+        ]
+    ],
+    [
+        'id' => 'attitude',
+        'value' => 'Attitude',
+        'view' => 'attitude',
+        'params' => [
+            'attitudes' => $attitudes,
+            'cities' => $cities,
+            'types' => $types,
+            'trashRelationArm' => $trashRelationArm,
+            'trashRelationEng' => $trashRelationEng
+        ]
+    ],
+    [
+        'id' => 're-pilot',
+        'value' => 'Re-pilot',
+        'view' => 're-pilot',
+        'params' => [
+            'pilots' => $pilots,
+            'cities' => $cities,
+            'types' => $types,
+            'trashRecycleArm' => $trashRecycleArm,
+            'trashRecycleEng' => $trashRecycleEng
+        ]
+    ],
+];
 
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="income">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="3">Տնային տնտեսության քանակը ըստ աշխատավարձ ստացողների քանակի</th>
-                <th colspan="3">Տնային տնտեսության քանակը ըստ թոշակ/կրթաթոշակ ստացողների քանակի</th>
-            </tr>
-            <tr>
-                <td>1 բնակիչ</td>
-                <td>2 բնակիչ</td>
-                <td>3 և ավելի բնակիչներ</td>
-                <td>1 բնակիչ</td>
-                <td>2 բնակիչ</td>
-                <td>3 և ավելի բնակիչներ</td>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <td colspan="3">Number of households with number of persons on salary</td>
-                <td colspan="3">Number of households with number of persons getting pension/stipendium only</td>
-            </tr>
-            <tr>
-                <td>1 person</td>
-                <td>2 persons</td>
-                <td>3 and more persons</td>
-                <td>1 person</td>
-                <td>2 persons</td>
-                <td>3 and more persons</td>
-            </tr>
-            <?php foreach ($incomes as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
+foreach ($tabs as $tab) {
+    $tables[$tab['view']] = $this->render('reports/_' . $tab['view'], $tab['params']);
+}
 
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="disposal">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="<?= count($trashPlaceArm) ?>">Տնային տնտեսության քանակը ըստ աղբի նետման տեսակի</th>
-            </tr>
-            <tr>
-                <?php foreach ($trashPlaceArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <th colspan="<?= count($trashPlaceEng) ?>">Number of households as per typical waste disposal practice
-                </th>
-            </tr>
-            <tr>
-                <?php foreach ($trashPlaceEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <?php foreach ($disposals as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
-
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="who">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="<?= count($trashManArm) ?>">Ով է սովորաբար նետում աղբը Ձեր տանը</th>
-                <th colspan="<?= 3 ?>">Քանի անգամ է հանվում աղբը</th>
-            </tr>
-            <tr>
-                <?php foreach ($trashManArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <td>1 կամ 1-ից քիչ</td>
-                <td>2-3 անգամ</td>
-                <td>ամեն օր</td>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <th colspan="<?= count($trashManEng) ?>">Who typically takes out waste from your household?</th>
-                <th colspan="<?= 3 ?>">Times a week your household takes the waste out</th>
-            </tr>
-            <tr>
-                <?php foreach ($trashManEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <td>1 or less</td>
-                <td>2-3 times</td>
-                <td>every day or so</td>
-            </tr>
-            <?php foreach ($who as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
-
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="fractions">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="4">Տնային տնտեսության քանակը ըստ շաբաթում թափված աղբի քանակի (դույլ կամ տոպրակ)</th>
-                <th colspan="<?= count($trashCountSummerArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի
-                    (Ամռանը)
-                </th>
-                <th colspan="<?= count($trashCountWinterArm); ?>">Տնային տնտեսության քանակը ըստ շաբաթում գեներացված աղբի
-                    (Ձմռանը)
-                </th>
-                <th colspan="2">Տնային տնտեսության քանակը ըստ թղթի թափման քանակի</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2-3 հատ</td>
-                <td>4-5 հատ</td>
-                <td>6 և ավելի</td>
-                <?php foreach ($trashCountSummerArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <?php foreach ($trashCountWinterArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <td>Շատ</td>
-                <td>Ոչ շատ</td>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <th colspan="4">Number of households per number of bags/buckets of household waste disposed of per
-                    week
-                </th>
-                <th colspan="<?= count($trashCountSummerEng); ?>">Number of households per number of packaging waste
-                    items generated per week
-                    in summer
-                </th>
-                <th colspan="<?= count($trashCountWinterEng); ?>">Number of households per number of packaging waste
-                    items generated per week
-                    in winter
-                </th>
-                <th colspan="2">Number of households per typical amount of paper/cardboard in waste</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2-3 pcs</td>
-                <td>4-5 pcs</td>
-                <td>6 or more pcs</td>
-                <?php foreach ($trashCountSummerEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <?php foreach ($trashCountWinterEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-                <td>Much</td>
-                <td>Not much</td>
-            </tr>
-            <?php foreach ($fractions as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
-
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="attitude">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="<?= count($trashRelationArm) ?>">Տնային տնտեսության քանակը ըստ վերաբերմունքի</th>
-            </tr>
-            <tr>
-                <?php foreach ($trashRelationArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <th colspan="<?= count($trashRelationEng) ?>">Number of households per attitude pattern</th>
-            </tr>
-            <tr>
-                <?php foreach ($trashRelationEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <?php foreach ($attitudes as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
-
-                }
-            } ?>
-        </table>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="re-pilot">
-        <table class="table table-bordered">
-            <tr>
-                <th rowspan="2">Համայնքի անուն</th>
-                <th rowspan="2">Տնային տնտեսությունները ուսումնասիրության ընթացքում</th>
-                <th colspan="<?= count($trashRecycleArm) ?>">Տնային տնտեսության քանակը որոնք պատրաստեն փորձելու հավաքել
-                    առանձին հետագա վերամշակման համար ըստ ֆրակցիաներ
-                </th>
-            </tr>
-            <tr>
-                <?php foreach ($trashRecycleArm as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <tr>
-                <td rowspan="2">Community name</td>
-                <td rowspan="2">Households covered by the survey</td>
-                <th colspan="<?= count($trashRecycleEng) ?>">Number of households ready to experiment re separate
-                    collection of recyclables per fraction
-                </th>
-            </tr>
-            <tr>
-                <?php foreach ($trashRecycleEng as $value) { ?>
-                    <td><?= $value ?></td>
-                <?php } ?>
-            </tr>
-            <?php foreach ($pilots as $city => $value) {
-                echo '<tr><td rowspan="3">' . $cities[$city] . '</td>';
-                foreach ($value as $typeKey => $typeValue) {
-                    echo ($typeKey != 1) ? '<tr ' . (($typeKey == 'total') ? 'class="active"' : '') . '>' : '';
-                    echo '<td>' . $types[$typeKey] . '</td>';
-                    foreach ($typeValue as $column) { ?>
-                        <td><?= $column; ?></td>
-                    <?php }
-                    echo '</tr>';
-
-                }
-            } ?>
-        </table>
-    </div>
-</div>
+if ($excel) {
+    $this->render('reports/excel', ['tabs' => $tabs, 'tables' => $tables]);
+} else {
+    echo $this->render('reports/html', ['region' => $region, 'tabs' => $tabs, 'tables' => $tables]);
+}

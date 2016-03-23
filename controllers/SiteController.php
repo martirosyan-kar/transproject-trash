@@ -444,6 +444,7 @@ class SiteController extends PermissionController
             'trashCountSummerEng' => $trashCountSummerEng,
             'trashCountWinterArm' => $trashCountWinterArm,
             'trashCountWinterEng' => $trashCountWinterEng,
+            'excel' => $params['excel']
         ]);
     }
 }

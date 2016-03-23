@@ -114,6 +114,10 @@ class LanguageHelper
                 'label' => 'Ավելացնել (Add)',
                 'url' => '/site/main'
             ],
+            'excel' => [
+                'label' => 'Արտահանել/Export Excel',
+                'url' => '/site/tables'
+            ],
         ];
 
         $return = $array[$key];

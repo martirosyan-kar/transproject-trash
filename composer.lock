@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "277af01ce4adb0cffa76468a530ae2a9",
-    "content-hash": "cef8ca6ca4a45d8f54d6f2894266dc3e",
+    "hash": "88abc33075c62ec9897ee16b912a94df",
+    "content-hash": "88dd887c3a746ceb2cd50a0487ad5a43",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -335,16 +335,16 @@
         },
         {
             "name": "bower-asset/polymer",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Polymer/polymer.git",
-                "reference": "61fac558012d9ef56ea78ed5435de0c418a4afbb"
+                "reference": "11c987b2eb3c73b388a79fc8aaea8ca01624f514"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Polymer/polymer/zipball/61fac558012d9ef56ea78ed5435de0c418a4afbb",
-                "reference": "61fac558012d9ef56ea78ed5435de0c418a4afbb",
+                "url": "https://api.github.com/repos/Polymer/polymer/zipball/11c987b2eb3c73b388a79fc8aaea8ca01624f514",
+                "reference": "11c987b2eb3c73b388a79fc8aaea8ca01624f514",
                 "shasum": ""
             },
             "require": {
@@ -531,12 +531,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "e4499350d8a94c4c693a7e784295eff7a717ae67"
+                "reference": "e2a490ceec590bf5bfd1b43bd424fb9dceceb7c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/e4499350d8a94c4c693a7e784295eff7a717ae67",
-                "reference": "e4499350d8a94c4c693a7e784295eff7a717ae67",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/e2a490ceec590bf5bfd1b43bd424fb9dceceb7c5",
+                "reference": "e2a490ceec590bf5bfd1b43bd424fb9dceceb7c5",
                 "shasum": ""
             },
             "require": {
@@ -583,7 +583,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2016-02-09 22:09:46"
+            "time": "2016-03-18 13:28:11"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1211,6 +1211,67 @@
             "time": "2016-02-28 17:19:12"
         },
         {
+            "name": "phpoffice/phpexcel",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "7d1c140974a4988f8a9739d167335d24fb59955e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/7d1c140974a4988f8a9739d167335d24fb59955e",
+                "reference": "7d1c140974a4988f8a9739d167335d24fb59955e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": "^5.2|^7.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Erik Tilt"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://rootslabs.net"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2016-03-15 11:48:49"
+        },
+        {
             "name": "phpspec/php-diff",
             "version": "dev-master",
             "source": {
@@ -1296,6 +1357,70 @@
                 "mailer"
             ],
             "time": "2016-01-03 15:42:47"
+        },
+        {
+            "name": "tecnick.com/tcpdf",
+            "version": "6.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/TCPDF.git",
+                "reference": "354433a33946ae7497c3eab291eaaf814bccbfab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/354433a33946ae7497c3eab291eaaf814bccbfab",
+                "reference": "354433a33946ae7497c3eab291eaaf814bccbfab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fonts",
+                    "config",
+                    "include",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "homepage": "http://nicolaasuni.tecnick.com"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+            "homepage": "http://www.tcpdf.org/",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "barcodes",
+                "datamatrix",
+                "pdf",
+                "pdf417",
+                "qrcode"
+            ],
+            "abandoned": "tecnickcom/tcpdf",
+            "time": "2015-08-02 12:30:27"
         },
         {
             "name": "yiisoft/yii2",
@@ -1542,12 +1667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "fed0f3b43b9dab333978e8394ee05cfd84d438b2"
+                "reference": "8cc683206e2d3e4202bee7acaeec1dbc6892055b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/fed0f3b43b9dab333978e8394ee05cfd84d438b2",
-                "reference": "fed0f3b43b9dab333978e8394ee05cfd84d438b2",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/8cc683206e2d3e4202bee7acaeec1dbc6892055b",
+                "reference": "8cc683206e2d3e4202bee7acaeec1dbc6892055b",
                 "shasum": ""
             },
             "require": {
@@ -1587,7 +1712,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-03-15 09:53:13"
+            "time": "2016-03-18 14:09:57"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -1885,7 +2010,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kartik-v/yii2-widget-datepicker": 20,
-        "fxp/composer-asset-plugin": 20
+        "fxp/composer-asset-plugin": 20,
+        "phpoffice/phpexcel": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

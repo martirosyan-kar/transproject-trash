@@ -22,7 +22,9 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "johnitvn/yii2-user-plus": "*",
         "johnitvn/yii2-rbac-plus": "*",
-        "fxp/composer-asset-plugin": "@dev"
+        "fxp/composer-asset-plugin": "@dev",
+        "phpoffice/phpexcel": "dev-develop",
+        "tecnick.com/tcpdf": "^6.2"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
