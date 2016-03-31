@@ -139,7 +139,7 @@ foreach ($data as $value) {
             $members[$value->city][$value->type]['resident_5']++;
             $members[$value->city]['total']['resident_5']++;
         } else {
-            if(isset($members[$value->city][$value->type]['resident_' . $value->resident])) {
+            if (isset($members[$value->city][$value->type]['resident_' . $value->resident])) {
                 $members[$value->city][$value->type]['resident_' . $value->resident]++;
                 $members[$value->city]['total']['resident_' . $value->resident]++;
             }
@@ -151,7 +151,7 @@ foreach ($data as $value) {
             $members[$value->city][$value->type]['children_5']++;
             $members[$value->city]['total']['children_5']++;
         } else {
-            if(isset($members[$value->city][$value->type]['children_' . $value->children])) {
+            if (isset($members[$value->city][$value->type]['children_' . $value->children])) {
                 $members[$value->city][$value->type]['children_' . $value->children]++;
                 $members[$value->city]['total']['children_' . $value->children]++;
             }
@@ -169,7 +169,7 @@ foreach ($data as $value) {
             $incomes[$value->city][$value->type]['employee_3']++;
             $incomes[$value->city]['total']['employee_3']++;
         } else {
-            if(isset($members[$value->city][$value->type]['employee_' . $value->employee])) {
+            if (isset($members[$value->city][$value->type]['employee_' . $value->employee])) {
                 $incomes[$value->city][$value->type]['employee_' . $value->employee]++;
                 $incomes[$value->city]['total']['employee_' . $value->employee]++;
             }
@@ -180,7 +180,7 @@ foreach ($data as $value) {
             $incomes[$value->city][$value->type]['retiree_3']++;
             $incomes[$value->city]['total']['retiree_3']++;
         } else {
-            if(isset($members[$value->city][$value->type]['retiree_' . $value->retiree])) {
+            if (isset($members[$value->city][$value->type]['retiree_' . $value->retiree])) {
                 $incomes[$value->city][$value->type]['retiree_' . $value->retiree]++;
                 $incomes[$value->city]['total']['retiree_' . $value->retiree]++;
             }
@@ -191,7 +191,7 @@ foreach ($data as $value) {
     $disposalData = $value->mainTrashPlaces;
     if (!empty($disposalData)) {
         foreach ($disposalData as $disposalValue) {
-            if(isset($members[$value->city][$value->type][$disposalValue->trash_place_id])) {
+            if (isset($members[$value->city][$value->type][$disposalValue->trash_place_id])) {
                 $disposals[$value->city][$value->type][$disposalValue->trash_place_id]++;
                 $disposals[$value->city]['total'][$disposalValue->trash_place_id]++;
             }
@@ -202,7 +202,7 @@ foreach ($data as $value) {
     $trashOutData = $value->mainTrashMen;
     if (!empty($trashOutData)) {
         foreach ($trashOutData as $outValue) {
-            if(isset($members[$value->city][$value->type][$outValue->trash_man_id])) {
+            if (isset($members[$value->city][$value->type][$outValue->trash_man_id])) {
                 $who[$value->city][$value->type][$outValue->trash_man_id]++;
                 $who[$value->city]['total'][$outValue->trash_man_id]++;
             }
@@ -216,7 +216,7 @@ foreach ($data as $value) {
         $who[$value->city][$value->type]['out_2']++;
         $who[$value->city]['total']['out_2']++;
     } else {
-        if(isset($members[$value->city][$value->type]['out_3'])) {
+        if (isset($members[$value->city][$value->type]['out_3'])) {
             $who[$value->city][$value->type]['out_3']++;
             $who[$value->city]['total']['out_3']++;
         }
@@ -224,43 +224,43 @@ foreach ($data as $value) {
 
     //fractions
     if ($value->trash_count == 1) {
-        if(isset($fractions[$value->city][$value->type]['trash_count_1'])) {
+        if (isset($fractions[$value->city][$value->type]['trash_count_1'])) {
             $fractions[$value->city][$value->type]['trash_count_1']++;
             $fractions[$value->city]['total']['trash_count_1']++;
         }
     } elseif ($value->trash_count >= 2 && $value->trash_count <= 3) {
-        if(isset($fractions[$value->city][$value->type]['trash_count_2'])) {
+        if (isset($fractions[$value->city][$value->type]['trash_count_2'])) {
             $fractions[$value->city][$value->type]['trash_count_2']++;
             $fractions[$value->city]['total']['trash_count_2']++;
         }
     } elseif ($value->trash_count >= 4 && $value->trash_count <= 5) {
-        if(isset($fractions[$value->city][$value->type]['trash_count_3'])) {
+        if (isset($fractions[$value->city][$value->type]['trash_count_3'])) {
             $fractions[$value->city][$value->type]['trash_count_3']++;
             $fractions[$value->city]['total']['trash_count_3']++;
         }
     } elseif ($value->trash_count >= 6) {
-        if(isset($fractions[$value->city][$value->type]['trash_count_4'])) {
+        if (isset($fractions[$value->city][$value->type]['trash_count_4'])) {
             $fractions[$value->city][$value->type]['trash_count_4']++;
             $fractions[$value->city]['total']['trash_count_4']++;
         }
     }
     foreach ($trashCountSummerArm as $countKey => $countValue) {
         $field = 'summer_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field] ++;
-        $fractions[$value->city]['total'][$field] ++;
+        $fractions[$value->city][$typeKey][$field]++;
+        $fractions[$value->city]['total'][$field]++;
     }
     foreach ($trashCountWinterArm as $countKey => $countValue) {
         $field = 'winter_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field] ++;
-        $fractions[$value->city]['total'][$field] ++;
+        $fractions[$value->city][$typeKey][$field]++;
+        $fractions[$value->city]['total'][$field]++;
     }
     if ($value->paper == 1) {
-        if(isset($members[$value->city][$value->type]['paper_1'])) {
+        if (isset($members[$value->city][$value->type]['paper_1'])) {
             $fractions[$value->city][$value->type]['paper_1']++;
             $fractions[$value->city]['total']['paper_1']++;
         }
     } elseif ($value->paper == 2) {
-        if(isset($members[$value->city][$value->type]['paper_2'])) {
+        if (isset($members[$value->city][$value->type]['paper_2'])) {
             $fractions[$value->city][$value->type]['paper_2']++;
             $fractions[$value->city]['total']['paper_2']++;
         }
@@ -270,8 +270,10 @@ foreach ($data as $value) {
     $trashRelationData = $value->mainTrashRelations;
     if (!empty($trashRelationData)) {
         foreach ($trashRelationData as $relationValue) {
-            $attitudes[$value->city][$value->type][$relationValue->trash_relation_id]++;
-            $attitudes[$value->city]['total'][$relationValue->trash_relation_id]++;
+            if (isset($members[$value->city][$value->type][$relationValue->trash_relation_id])) {
+                $attitudes[$value->city][$value->type][$relationValue->trash_relation_id]++;
+                $attitudes[$value->city]['total'][$relationValue->trash_relation_id]++;
+            }
         }
     }
 
@@ -279,8 +281,10 @@ foreach ($data as $value) {
     $trashRecycleData = $value->mainTrashRecycles;
     if (!empty($trashRecycleData)) {
         foreach ($trashRecycleData as $recycleValue) {
-            $pilots[$value->city][$value->type][$recycleValue->trash_recycle_id]++;
-            $pilots[$value->city]['total'][$recycleValue->trash_recycle_id]++;
+            if (isset($members[$value->city][$value->type][$recycleValue->trash_recycle_id])) {
+                $pilots[$value->city][$value->type][$recycleValue->trash_recycle_id]++;
+                $pilots[$value->city]['total'][$recycleValue->trash_recycle_id]++;
+            }
         }
     }
 }
