@@ -19,10 +19,10 @@ class ExcelHelper
             $sheet->setCellValue('A' . $row, $cities[$city]);
             foreach ($value as $typeKey => $typeValue) {
                 $col = 'B';
-                $sheet->setCellValue($col . $row, $types[$typeKey]);
+                $sheet->setCellValue($col . $row, str_replace('<br>',"\n",$types[$typeKey]));
                 $col++;
                 foreach ($typeValue as $column) {
-                    $sheet->setCellValue($col . $row, $column);
+                    $sheet->setCellValue($col . $row, str_replace('<br>',"\n",$column));
                     $col++;
                 }
                 $row++;

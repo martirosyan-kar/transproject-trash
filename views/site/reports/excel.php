@@ -31,7 +31,7 @@ foreach ($tabs as $tab) {
     extract($tabs[$i]['params']);
     //@todo change mergeCells and setCellValues to ExcelHelper::mergeBothLanguages and ExcelHelper::setBothLanguages
     //@todo create functions for each tab
-    
+
     $startColumn = 'C';
     if ($i == 0) {
         $endColumn = ExcelHelper::moveColumn($startColumn, 5);
@@ -351,7 +351,10 @@ foreach ($tabs as $tab) {
     }
 
     $sheets[$i] = ExcelHelper::printData($data, $cities, $types, $sheets[$i]);
-    $sheets[$i]->getStyle('A:M')->getAlignment()->setWrapText(true);
+    for ($columnItem = 'A'; $columnItem <= $endColumn; $columnItem++) {
+        $sheets[$i]->getColumnDimension($columnItem)->setWidth(15);
+    }
+    $sheets[$i]->getStyle('A1:'.$endColumn.'4')->getAlignment()->setWrapText(true);
     $i++;
 }
 
