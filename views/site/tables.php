@@ -151,8 +151,10 @@ foreach ($data as $value) {
             $members[$value->city][$value->type]['children_5']++;
             $members[$value->city]['total']['children_5']++;
         } else {
-            $members[$value->city][$value->type]['children_' . $value->children]++;
-            $members[$value->city]['total']['children_' . $value->children]++;
+            if(isset($members[$value->city][$value->type]['children_' . $value->children])) {
+                $members[$value->city][$value->type]['children_' . $value->children]++;
+                $members[$value->city]['total']['children_' . $value->children]++;
+            }
         }
     }
 
@@ -167,8 +169,10 @@ foreach ($data as $value) {
             $incomes[$value->city][$value->type]['employee_3']++;
             $incomes[$value->city]['total']['employee_3']++;
         } else {
-            $incomes[$value->city][$value->type]['employee_' . $value->employee]++;
-            $incomes[$value->city]['total']['employee_' . $value->employee]++;
+            if(isset($members[$value->city][$value->type]['employee_' . $value->employee])) {
+                $incomes[$value->city][$value->type]['employee_' . $value->employee]++;
+                $incomes[$value->city]['total']['employee_' . $value->employee]++;
+            }
         }
     }
     if ($value->retiree >= 1) {
@@ -176,8 +180,10 @@ foreach ($data as $value) {
             $incomes[$value->city][$value->type]['retiree_3']++;
             $incomes[$value->city]['total']['retiree_3']++;
         } else {
-            $incomes[$value->city][$value->type]['retiree_' . $value->retiree]++;
-            $incomes[$value->city]['total']['retiree_' . $value->retiree]++;
+            if(isset($members[$value->city][$value->type]['retiree_' . $value->retiree])) {
+                $incomes[$value->city][$value->type]['retiree_' . $value->retiree]++;
+                $incomes[$value->city]['total']['retiree_' . $value->retiree]++;
+            }
         }
     }
 
