@@ -255,11 +255,15 @@ foreach ($data as $value) {
         $fractions[$value->city]['total'][$field] ++;
     }
     if ($value->paper == 1) {
-        $fractions[$value->city][$value->type]['paper_1']++;
-        $fractions[$value->city]['total']['paper_1']++;
+        if(isset($members[$value->city][$value->type]['paper_1'])) {
+            $fractions[$value->city][$value->type]['paper_1']++;
+            $fractions[$value->city]['total']['paper_1']++;
+        }
     } elseif ($value->paper == 2) {
-        $fractions[$value->city][$value->type]['paper_2']++;
-        $fractions[$value->city]['total']['paper_2']++;
+        if(isset($members[$value->city][$value->type]['paper_2'])) {
+            $fractions[$value->city][$value->type]['paper_2']++;
+            $fractions[$value->city]['total']['paper_2']++;
+        }
     }
 
     //attitude
