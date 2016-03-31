@@ -191,8 +191,10 @@ foreach ($data as $value) {
     $disposalData = $value->mainTrashPlaces;
     if (!empty($disposalData)) {
         foreach ($disposalData as $disposalValue) {
-            $disposals[$value->city][$value->type][$disposalValue->trash_place_id]++;
-            $disposals[$value->city]['total'][$disposalValue->trash_place_id]++;
+            if(isset($members[$value->city][$value->type][$disposalValue->trash_place_id])) {
+                $disposals[$value->city][$value->type][$disposalValue->trash_place_id]++;
+                $disposals[$value->city]['total'][$disposalValue->trash_place_id]++;
+            }
         }
     }
 
@@ -200,8 +202,10 @@ foreach ($data as $value) {
     $trashOutData = $value->mainTrashMen;
     if (!empty($trashOutData)) {
         foreach ($trashOutData as $outValue) {
-            $who[$value->city][$value->type][$outValue->trash_man_id]++;
-            $who[$value->city]['total'][$outValue->trash_man_id]++;
+            if(isset($members[$value->city][$value->type][$outValue->trash_man_id])) {
+                $who[$value->city][$value->type][$outValue->trash_man_id]++;
+                $who[$value->city]['total'][$outValue->trash_man_id]++;
+            }
         }
     }
 
