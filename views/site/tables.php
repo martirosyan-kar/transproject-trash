@@ -224,17 +224,25 @@ foreach ($data as $value) {
 
     //fractions
     if ($value->trash_count == 1) {
-        $fractions[$value->city][$value->type]['trash_count_1']++;
-        $fractions[$value->city]['total']['trash_count_1']++;
+        if(isset($fractions[$value->city][$value->type]['trash_count_1'])) {
+            $fractions[$value->city][$value->type]['trash_count_1']++;
+            $fractions[$value->city]['total']['trash_count_1']++;
+        }
     } elseif ($value->trash_count >= 2 && $value->trash_count <= 3) {
-        $fractions[$value->city][$value->type]['trash_count_2']++;
-        $fractions[$value->city]['total']['trash_count_2']++;
+        if(isset($fractions[$value->city][$value->type]['trash_count_2'])) {
+            $fractions[$value->city][$value->type]['trash_count_2']++;
+            $fractions[$value->city]['total']['trash_count_2']++;
+        }
     } elseif ($value->trash_count >= 4 && $value->trash_count <= 5) {
-        $fractions[$value->city][$value->type]['trash_count_3']++;
-        $fractions[$value->city]['total']['trash_count_3']++;
+        if(isset($fractions[$value->city][$value->type]['trash_count_3'])) {
+            $fractions[$value->city][$value->type]['trash_count_3']++;
+            $fractions[$value->city]['total']['trash_count_3']++;
+        }
     } elseif ($value->trash_count >= 6) {
-        $fractions[$value->city][$value->type]['trash_count_4']++;
-        $fractions[$value->city]['total']['trash_count_4']++;
+        if(isset($fractions[$value->city][$value->type]['trash_count_4'])) {
+            $fractions[$value->city][$value->type]['trash_count_4']++;
+            $fractions[$value->city]['total']['trash_count_4']++;
+        }
     }
     foreach ($trashCountSummerArm as $countKey => $countValue) {
         $field = 'summer_count_' . $countKey;
