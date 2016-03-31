@@ -13,6 +13,7 @@ use app\models\MainTrashRelation;
 use app\models\Region;
 use app\models\TrashCountSummer;
 use app\models\TrashCountWinter;
+use app\models\TrashMan;
 use app\models\TrashPlace;
 use app\models\TrashRecycle;
 use app\models\TrashRelation;
@@ -414,8 +415,8 @@ class SiteController extends PermissionController
         $trashPlaceArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
         $trashPlaceEng = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name_eng');
 
-        $trashManArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
-        $trashManEng = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name_eng');
+        $trashManArm = ArrayHelper::map(TrashMan::find()->orderBy('id')->all(), 'id', 'name');
+        $trashManEng = ArrayHelper::map(TrashMan::find()->orderBy('id')->all(), 'id', 'name_eng');
 
         $trashRelationArm = ArrayHelper::map(TrashRelation::find()->orderBy('id')->all(), 'id', 'name');
         $trashRelationEng = ArrayHelper::map(TrashRelation::find()->orderBy('id')->all(), 'id', 'name_eng');
