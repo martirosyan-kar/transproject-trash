@@ -139,8 +139,10 @@ foreach ($data as $value) {
             $members[$value->city][$value->type]['resident_5']++;
             $members[$value->city]['total']['resident_5']++;
         } else {
-            $members[$value->city][$value->type]['resident_' . $value->resident]++;
-            $members[$value->city]['total']['resident_' . $value->resident]++;
+            if($members[$value->city][$value->type]['resident_' . $value->resident]) {
+                $members[$value->city][$value->type]['resident_' . $value->resident]++;
+                $members[$value->city]['total']['resident_' . $value->resident]++;
+            }
         }
     }
 
