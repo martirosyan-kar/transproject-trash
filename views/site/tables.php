@@ -216,8 +216,10 @@ foreach ($data as $value) {
         $who[$value->city][$value->type]['out_2']++;
         $who[$value->city]['total']['out_2']++;
     } else {
-        $who[$value->city][$value->type]['out_3']++;
-        $who[$value->city]['total']['out_3']++;
+        if(isset($members[$value->city][$value->type]['out_3'])) {
+            $who[$value->city][$value->type]['out_3']++;
+            $who[$value->city]['total']['out_3']++;
+        }
     }
 
     //fractions
