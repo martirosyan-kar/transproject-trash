@@ -423,13 +423,13 @@ foreach($dataProvider->getModels() as $value){
         $value->winter_count_2,
         $value->winter_count_3,
         $value->winter_count_4,
-        $value->paper0->nameBothShort,
+        isset($value->paper0)?$value->paper0->nameBothShort:'',
         $value->trashRelationMulti,
         $value->trashRecycleMulti,
         $value->rubberItemsMulti,
         $value->answer_count,
         $value->woman_count,
-        $value->person0->nameBothShort,
+        isset($value->person0)?$value->person0->nameBothShort:'',
         $value->date,
         $value->interrogatory
     ];
