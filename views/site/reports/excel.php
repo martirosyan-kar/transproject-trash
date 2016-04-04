@@ -1,5 +1,9 @@
 <?php
+ini_set('memory_limit', '-1');
+ini_set('max_execution_time', 0);
 use app\components\ExcelHelper;
+use app\models\Main;
+use app\models\MainSearch;
 
 $exportFileName = date("mdY");
 ob_clean();
@@ -358,6 +362,79 @@ foreach ($tabs as $tab) {
     $i++;
 }
 
+$sheets[$i] = new PHPExcel_Worksheet($objPHPExcel, 'total');
+$objPHPExcel->addSheet($sheets[$i]);
+
+$main = new Main();
+$searchModel = new MainSearch();
+$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+$dataProvider->setPagination(['pageSize'=>$dataProvider->getTotalCount()]);
+$dataArray = [
+    [
+        $main->getAttributeLabel('city'),
+        $main->getAttributeLabel('type'),
+        $main->getAttributeLabel('resident'),
+        $main->getAttributeLabel('children'),
+        $main->getAttributeLabel('employee'),
+        $main->getAttributeLabel('retiree'),
+        $main->getAttributeLabel('dominant'),
+        $main->getAttributeLabel('mainTrashPlaces.trash_place_id'),
+        $main->getAttributeLabel('mainTrashMen.trash_man_id'),
+        $main->getAttributeLabel('filter_trash_out'),
+        $main->getAttributeLabel('filter_trash_count'),
+        $main->getAttributeLabel('filter_summer_1'),
+        $main->getAttributeLabel('filter_summer_2'),
+        $main->getAttributeLabel('filter_summer_3'),
+        $main->getAttributeLabel('filter_summer_4'),
+        $main->getAttributeLabel('filter_winter_1'),
+        $main->getAttributeLabel('filter_winter_2'),
+        $main->getAttributeLabel('filter_winter_3'),
+        $main->getAttributeLabel('filter_winter_4'),
+        $main->getAttributeLabel('paper'),
+        $main->getAttributeLabel('mainTrashRelations.trash_relation_id'),
+        $main->getAttributeLabel('mainTrashRecycles.trash_recycle_id'),
+        $main->getAttributeLabel('mainRubberItems.rubber_item_id'),
+        $main->getAttributeLabel('answer_count'),
+        $main->getAttributeLabel('woman_count'),
+        $main->getAttributeLabel('person'),
+        $main->getAttributeLabel('date'),
+        $main->getAttributeLabel('interrogatory'),
+    ],
+];
+foreach($dataProvider->getModels() as $value){
+
+    $dataArray[] = [
+        $value->city0->nameBothShort,
+        $value->type0->nameBothShort,
+        $value->resident,
+        $value->children,
+        $value->employee,
+        $value->retiree,
+        $value->dominant0->nameBothShort,
+        $value->trashPlaceMulti,
+        $value->trashManMulti,
+        $value->trash_out,
+        $value->trash_count,
+        $value->summer_count_1,
+        $value->summer_count_2,
+        $value->summer_count_3,
+        $value->summer_count_4,
+        $value->winter_count_1,
+        $value->winter_count_2,
+        $value->winter_count_3,
+        $value->winter_count_4,
+        $value->paper0->nameBothShort,
+        $value->trashRelationMulti,
+        $value->trashRecycleMulti,
+        $value->rubberItemsMulti,
+        $value->answer_count,
+        $value->woman_count,
+        $value->person0->nameBothShort,
+        $value->date,
+        $value->interrogatory
+    ];
+}
+$sheets[$i]->fromArray($dataArray, '', 'A1');
 
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
