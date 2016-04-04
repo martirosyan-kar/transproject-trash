@@ -210,11 +210,15 @@ foreach ($data as $value) {
     }
 
     if ($value->trash_out <= 1) {
-        $who[$value->city][$value->type]['out_1']++;
-        $who[$value->city]['total']['out_1']++;
+        if (isset($who[$value->city][$value->type]['out_1'])) {
+            $who[$value->city][$value->type]['out_1']++;
+            $who[$value->city]['total']['out_1']++;
+        }
     } elseif ($value->trash_out >= 2 && $value->trash_out <= 3) {
-        $who[$value->city][$value->type]['out_2']++;
-        $who[$value->city]['total']['out_2']++;
+        if (isset($who[$value->city][$value->type]['out_2'])) {
+            $who[$value->city][$value->type]['out_2']++;
+            $who[$value->city]['total']['out_2']++;
+        }
     } else {
         if (isset($who[$value->city][$value->type]['out_3'])) {
             $who[$value->city][$value->type]['out_3']++;
