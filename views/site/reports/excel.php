@@ -404,13 +404,13 @@ $dataArray = [
 foreach($dataProvider->getModels() as $value){
 
     $dataArray[] = [
-        $value->city0->nameBothShort,
-        $value->type0->nameBothShort,
+        isset($value->city0)?$value->city0->nameBothShort:'',
+        isset($value->type0)?$value->type0->nameBothShort:'',
         $value->resident,
         $value->children,
         $value->employee,
         $value->retiree,
-        $value->dominant0->nameBothShort,
+        isset($value->dominant0)?$value->dominant0->nameBothShort:'',
         $value->trashPlaceMulti,
         $value->trashManMulti,
         $value->trash_out,
