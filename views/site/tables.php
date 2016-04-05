@@ -150,8 +150,10 @@ foreach ($data as $value) {
 
     if ($value->children >= 1) {
         if ($value->children >= 5) {
-            $members[$value->city][$value->type]['children_5']++;
-            $members[$value->city]['total']['children_5']++;
+            if(isset($members[$value->city][$value->type]['children_5'])) {
+                $members[$value->city][$value->type]['children_5']++;
+                $members[$value->city]['total']['children_5']++;
+            }
         } else {
             if (isset($members[$value->city][$value->type]['children_' . $value->children])) {
                 $members[$value->city][$value->type]['children_' . $value->children]++;
@@ -161,8 +163,10 @@ foreach ($data as $value) {
     }
 
     if ($value->dominant == 1) {
-        $members[$value->city][$value->type]['woman']++;
-        $members[$value->city]['total']['woman']++;
+        if(isset($members[$value->city][$value->type]['woman'])) {
+            $members[$value->city][$value->type]['woman']++;
+            $members[$value->city]['total']['woman']++;
+        }
     }
 
     //incomes
@@ -179,8 +183,10 @@ foreach ($data as $value) {
     }
     if ($value->retiree >= 1) {
         if ($value->retiree >= 3) {
-            $incomes[$value->city][$value->type]['retiree_3']++;
-            $incomes[$value->city]['total']['retiree_3']++;
+            if (isset($incomes[$value->city][$value->type]['retiree_3'])) {
+                $incomes[$value->city][$value->type]['retiree_3']++;
+                $incomes[$value->city]['total']['retiree_3']++;
+            }
         } else {
             if (isset($incomes[$value->city][$value->type]['retiree_' . $value->retiree])) {
                 $incomes[$value->city][$value->type]['retiree_' . $value->retiree]++;
@@ -252,13 +258,17 @@ foreach ($data as $value) {
     }
     foreach ($trashCountSummerArm as $countKey => $countValue) {
         $field = 'summer_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field]++;
-        $fractions[$value->city]['total'][$field]++;
+        if(isset($fractions[$value->city][$value->type][$field])) {
+            $fractions[$value->city][$value->type][$field]++;
+            $fractions[$value->city]['total'][$field]++;
+        }
     }
     foreach ($trashCountWinterArm as $countKey => $countValue) {
         $field = 'winter_count_' . $countKey;
-        $fractions[$value->city][$typeKey][$field]++;
-        $fractions[$value->city]['total'][$field]++;
+        if(isset($fractions[$value->city][$value->type][$field])) {
+            $fractions[$value->city][$value->type][$field]++;
+            $fractions[$value->city]['total'][$field]++;
+        }
     }
     if ($value->paper == 1) {
         if (isset($fractions[$value->city][$value->type]['paper_1'])) {

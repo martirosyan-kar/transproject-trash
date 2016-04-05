@@ -116,15 +116,26 @@ class MainSearch extends Main
      */
     public function search($params)
     {
-        if (empty($this->region)) {
-            $this->region = 1;
+        $random = [];
+        if(Yii::$app->session->has('random')) {
+            $random = Yii::$app->session->get('random');
         }
-        $query = Main::find()->joinWith(['mainTrashPlaces', 'mainTrashMen', 'mainTrashRecycles', 'mainTrashRelations', 'mainRubberItems']);
+
+        $query = Main::find()->joinWith([
+            'mainTrashPlaces',
+            'mainTrashMen',
+            'mainTrashRecycles',
+            'mainTrashRelations',
+            'mainRubberItems'
+        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        if ($params['MainSearch']['region'] == -1) {
+            unset($params['MainSearch']['region']);
+        }
         $this->load($params);
 
         if (!$this->validate()) {
@@ -162,6 +173,10 @@ class MainSearch extends Main
             'main_rubber_items.rubber_item_id' => $this->getAttribute('rubber_items'),
         ]);
         $query = $this->addBetween($query);
+
+        if (!empty($random)) {
+            $query->andFilterWhere(['IN','main.id',$random]);
+        }
 
         $query->andFilterWhere(['like', 'answer_count', $this->answer_count])
             ->andFilterWhere(['like', 'woman_count', $this->woman_count])

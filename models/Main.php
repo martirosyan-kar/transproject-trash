@@ -365,4 +365,23 @@ class Main extends \yii\db\ActiveRecord
         }
         return '';
     }
+
+    public static function getMainData($region){
+        $random = [];
+        if(Yii::$app->session->has('random')) {
+            $random = Yii::$app->session->get('random');
+        }
+
+        $query = Main::find();
+        if (!empty($random)) {
+            $query->andFilterWhere(['IN','main.id',$random]);
+        }
+        if($region != -1) {
+            $query->andFilterWhere([
+                'region' => $region,
+            ]);
+        }
+
+        return $query->all();
+    }
 }

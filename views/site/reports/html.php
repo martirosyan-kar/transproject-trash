@@ -20,10 +20,12 @@ $excelLink = LanguageHelper::getLinks('excel', $arrayParams);
         <? $first = false;
     } ?>
 </ul>
+<? $first = true; ?>
 <div class="tab-content">
     <?php foreach ($tabs as $tab) { ?>
-        <div role="tabpanel" class="tab-pane active" id="<?= $tab['id']; ?>">
+        <div class="tab-pane <?= ($first) ? 'active' : ''; ?>" id="<?= $tab['id']; ?>">
             <?= $tables[$tab['view']]; ?>
         </div>
-    <?php } ?>
+        <?php $first = false;
+    } ?>
 </div>

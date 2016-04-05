@@ -27,11 +27,15 @@ class LanguageHelper
             $url = Yii::$app->urlManager->createUrl($params);
             $items[] = ['label' => $value, 'url' => $url];
         }
+        $arrayParams = ['MainSearch' => ['region' => -1]];
+        $params = array_merge(["site/index"], $arrayParams);
+        $url = Yii::$app->urlManager->createUrl($params);
+        $items[] = ['label' => 'Պատ. (Random)', 'url' => $url];
         if(\Yii::$app->user->can('site.list')) {
-            $items[] = ['label' => 'Գրադարան (Library)', 'url' => '/site/list'];
+            $items[] = ['label' => 'Գր. (Library)', 'url' => '/site/list'];
         }
         if(\Yii::$app->user->can('site.users')) {
-            $items[] = ['label' => 'Օգտագործողներ (Users)', 'url' => '/site/users'];
+            $items[] = ['label' => 'Օգտ. (Users)', 'url' => '/site/users'];
         }
         return $items;
     }

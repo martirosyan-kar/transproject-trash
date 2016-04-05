@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 use app\models\Region;
 use app\models\City;
@@ -28,6 +29,7 @@ $tableLink = LanguageHelper::getLinks('table', $arrayParams);
 $addLink = LanguageHelper::getLinks('add', $arrayParams);
 $model = new Main;
 $width = '300px';
+
 ?>
 <style>
     .grid-view th {
@@ -41,6 +43,17 @@ $width = '300px';
     <a class="btn btn-primary" href="<?= $chartLink['url']; ?>"><?= $chartLink['label']; ?></a>&nbsp;
     <a class="btn btn-primary" href="<?= $tableLink['url']; ?>"><?= $tableLink['label']; ?></a>&nbsp;
     <a href="<?= $addLink['url']; ?>" class="btn btn-primary"><?= $addLink['label']; ?></a>&nbsp;</h3>
+
+<?php $form = ActiveForm::begin(); ?>
+
+<?= Html::input('text','random',isset($_POST['random'])?$_POST['random']:''); ?>
+
+
+    <?= Html::submitButton('Գեներացնել (Generate)', ['class' => 'btn btn-primary']) ?>
+
+
+<?php ActiveForm::end(); ?>
+
 <div class="site-index" style="width: 3500px;">
 
     <?= GridView::widget([

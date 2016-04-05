@@ -54,6 +54,24 @@ class SiteController extends PermissionController
         if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
+        
+        if (!empty($_POST['random']) && is_numeric($_POST['random'])) {
+            $random = $_POST['random'];
+
+            if($region == -1) {
+                $regionWhere = [];
+            }
+            else {
+                $regionWhere = ['region' => $region];
+            }
+
+            $ids = ArrayHelper::map(Main::find()->where($regionWhere)->all(), 'id', 'id');
+            $randomIds = array_rand($ids, $random);
+            Yii::$app->session->set('random', $randomIds);
+        }
+        else {
+            Yii::$app->session->set('random', null);
+        }
 
         $searchModel = new MainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -75,11 +93,22 @@ class SiteController extends PermissionController
         if (!empty($params['MainSearch']['region'])) {
             $region = $params['MainSearch']['region'];
         }
-        $mains = Main::find()->where(array('region' => $region))->all();
-        $cities = ArrayHelper::map(City::find()->all(), 'id', 'name');
+        $mains = Main::getMainData($region);
+
+        if($region == -1) {
+            $regionWhere = [];
+        }
+        else {
+            $regionWhere = ['region' => $region];
+        }
+        $cityIds = ArrayHelper::map($mains, 'city', 'city');
+        $regionWhere['id'] = array_values($cityIds);
+
+        $cities = ArrayHelper::map(City::find()->where($regionWhere)->orderBy('id')->all(), 'id', 'nameBoth');
+
         $recycles = ArrayHelper::map(TrashRecycle::find()->all(), 'id', 'name');
         $cityKeys = array_keys($cities);
-        //echo "<pre>";print_r($cities);exit();
+
         $seasons = ['summer', 'winter'];
         $data = [];
         $totals = [];
@@ -408,8 +437,17 @@ class SiteController extends PermissionController
             $params['excel'] = false;
         }
 
-        $data = Main::find()->where(['region' => $region])->all();
-        $cities = ArrayHelper::map(City::find()->where(['region' => $region])->orderBy('id')->all(), 'id', 'nameBoth');
+        $data = Main::getMainData($region);
+        if($region == -1) {
+            $regionWhere = [];
+        }
+        else {
+            $regionWhere = ['region' => $region];
+        }
+        $cityIds = ArrayHelper::map($data, 'city', 'city');
+        $regionWhere['id'] = array_values($cityIds);
+
+        $cities = ArrayHelper::map(City::find()->where($regionWhere)->orderBy('id')->all(), 'id', 'nameBoth');
         $types = ArrayHelper::map(Type::find()->orderBy('id')->all(), 'id', 'nameBoth');
 
         $trashPlaceArm = ArrayHelper::map(TrashPlace::find()->orderBy('id')->all(), 'id', 'name');
