@@ -133,7 +133,7 @@ class MainSearch extends Main
             'query' => $query,
         ]);
 
-        if ($params['MainSearch']['region'] == -1) {
+        if (isset($params['MainSearch']['region']) && $params['MainSearch']['region'] == -1) {
             unset($params['MainSearch']['region']);
         }
         $this->load($params);
