@@ -185,7 +185,7 @@ class SiteController extends PermissionController
                         $field = $season . '_count_' . $i;
                         $sum = $main->$field;
                     }
-                    $data[$season][$cityKey][$season . '_' . $i]['value'] += $sum;
+                    $data[$season][$cityKey][$season . '_' . $i]['value'] += ($sum * $this->getWeightByType($i));
 
                     $dataKG[$season][$cityKey][$season . '_' . $i]['value'] += ($sum * $this->getWeightByType($i));
                 }
