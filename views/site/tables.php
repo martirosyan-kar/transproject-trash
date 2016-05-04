@@ -259,15 +259,15 @@ foreach ($data as $value) {
     foreach ($trashCountSummerArm as $countKey => $countValue) {
         $field = 'summer_count_' . $countKey;
         if(isset($fractions[$value->city][$value->type][$field])) {
-            $fractions[$value->city][$value->type][$field]++;
-            $fractions[$value->city]['total'][$field]++;
+            $fractions[$value->city][$value->type][$field]+= $value->$field;
+            $fractions[$value->city]['total'][$field]+= $value->$field;
         }
     }
     foreach ($trashCountWinterArm as $countKey => $countValue) {
         $field = 'winter_count_' . $countKey;
         if(isset($fractions[$value->city][$value->type][$field])) {
-            $fractions[$value->city][$value->type][$field]++;
-            $fractions[$value->city]['total'][$field]++;
+            $fractions[$value->city][$value->type][$field]+= $value->$field;
+            $fractions[$value->city]['total'][$field]+= $value->$field;
         }
     }
     if ($value->paper == 1) {
