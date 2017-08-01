@@ -230,12 +230,12 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
     <?= $form->field($model, 'answer_count',
         ['options' => ['class' => 'form-inline col-sm-6']])
         ->textInput(['class' => 'col-sm-6 form-control'])
-        ->label(null, ['class' => 'col-sm-6']); ?>
+        ->label(null, ['class' => 'col-sm-7']); ?>
 
     <?= $form->field($model, 'woman_count',
         ['options' => ['class' => 'form-inline col-sm-6']])
         ->textInput(['class' => 'col-sm-6 form-control'])
-        ->label(null, ['class' => 'col-sm-6']); ?>
+        ->label(null, ['class' => 'col-sm-5']); ?>
     <div class="clearfix"></div>
 
     <?= $form->field($model, 'person', ['options' => ['class' => 'form-inline col-sm-4']])->dropDownList(
@@ -244,12 +244,12 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
             'id', 'nameBoth'),
         [
             'class' => 'form-control'
-        ])->label(null, ['class' => 'col-sm-4']); ?>
+        ])->label(null, ['class' => 'col-sm-12']); ?>
 
     <?= $form->field($model, 'date',
         ['options' => ['class' => 'form-inline col-sm-4']])
         ->textInput(['class' => 'form-control'])
-        ->label(null, ['class' => 'col-sm-4'])
+        ->label(null, ['class' => 'col-sm-12'])
         ->widget(DatePicker::className(),['pluginOptions' => [
             'format' => 'yyyy-mm-dd',
             'todayHighlight' => true
@@ -259,7 +259,7 @@ $this->registerJsFile('js/scripts.js', ['depends' => [JqueryAsset::className()]]
     <?= $form->field($model, 'interrogatory',
         ['options' => ['class' => 'form-inline col-sm-4']])
         ->textInput(['class' => 'form-control'])
-        ->label(null, ['class' => 'col-sm-4']); ?>
+        ->label(null, ['class' => 'col-sm-12']); ?>
 
     <div class="clearfix"></div>
 
