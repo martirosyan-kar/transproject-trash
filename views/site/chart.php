@@ -14,7 +14,16 @@ use app\components\LanguageHelper;
 //ChartAsset::register($this);
 $this->registerJsFile('js/charts.js', ['depends' => [JqueryAsset::className(), ChartAsset::className()]]);
 
-$seasons = ['summer' => 'Մոտավոր աղբի քանակը ամռանը', 'winter' => 'Մոտավոր աղբի քանակը ձմռանը'];
+$seasons = [
+        'arm'=> [
+            'summer' => 'Մոտավոր աղբի քանակը ամռանը',
+            'winter' => 'Մոտավոր աղբի քանակը ձմռանը'
+        ],
+        'eng' => [
+            'summer' => 'Amount of waste in summer',
+            'winter' => 'Amount of waste in winter'
+        ]
+    ];
 
 $arrayParams = ['MainSearch' => ['region' => $region]];
 $indexLink = LanguageHelper::getLinks('index', $arrayParams);
@@ -25,7 +34,7 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
     <?php
     foreach ($totals as $season => $seasonValues) { ?>
         <div class="col-sm-6">
-            <h2><?= $seasons[$season]; ?></h2>
+            <h2><?= $seasons['arm'][$season];?> / <?= $seasons['eng'][$season]; ?></h2>
             <div id="<?= $season . '-main'; ?>" style="width: 500px; height: 500px;"></div>
         </div>
     <?php } ?>
@@ -35,7 +44,7 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
     <?php
     foreach ($totalsKG as $season => $seasonValues) { ?>
         <div class="col-sm-6">
-            <h2><?= $seasons[$season]; ?>(կգ)</h2>
+            <h2><?= $seasons['arm'][$season];?>(կգ) / <?= $seasons['eng'][$season]; ?>(kg)</h2>
             <div id="<?= $season . '-main-kg'; ?>" style="width: 500px; height: 500px;"></div>
         </div>
     <?php } ?>
@@ -44,7 +53,7 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
     <?php
     foreach ($data as $season => $seasonValues) { ?>
 <div class="col-sm-12">
-        <h2><?= $seasons[$season]; ?> ըստ համայքների</h2>
+        <h2><?= $seasons['arm'][$season];?> ըստ համայքների / <?= $seasons['eng'][$season]; ?> by community</h2>
         <?php foreach ($seasonValues as $cityKey => $value) { ?>
             <div class="col-sm-4">
                 <h3><?= $cities[$cityKey] ?></h3>
@@ -56,13 +65,13 @@ $indexLink = LanguageHelper::getLinks('index', $arrayParams);
 
 <div class="col-sm-12">
     <div class="col-sm-6">
-        <h2><?= 'Վերամշակման փորձ'; ?></h2>
+        <h2>Վերամշակման փորձ / Recycling experiment</h2>
         <div id="<?= 'recycle-main'; ?>" style="width: 500px; height: 500px;"></div>
     </div>
 </div>
 
 <div class="col-sm-12">
-    <h2><?= 'Վերամշակման փորձ'; ?> ըստ համայքների</h2>
+    <h2>Վերամշակման փորձ ըստ համայքների / Recycling experiment by community</h2>
     <?php
     foreach ($recycle as $cityKey => $value) { ?>
         <div class="col-sm-4">
