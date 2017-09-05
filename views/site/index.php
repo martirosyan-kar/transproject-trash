@@ -60,24 +60,38 @@ $width = '300px';
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            (Yii::$app->user->can('site.main')) ?
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}{delete}',
+                'template' => '{update}',
                 'urlCreator' => function ($action, $model, $key, $index) {
-                    if ($action === 'update') {
-                        $arrayParams = ['MainSearch' => ['region' => $model->region]];
-                        $arrayParams['id'] = $model->id;
-                        $params = array_merge(["site/main"], $arrayParams);
-                        $url = Yii::$app->urlManager->createUrl($params);
-                        return $url;
-                    }
-                    if ($action === 'delete') {
-                        $arrayParams = ['MainSearch' => ['region' => $model->region], 'id' => $model->id];
-                        $params = array_merge(["site/delete"], $arrayParams);
-                        $url = Yii::$app->urlManager->createUrl($params);
-                        return $url;
-                    }
+                    $arrayParams = ['MainSearch' => ['region' => $model->region]];
+                    $arrayParams['id'] = $model->id;
+                    $params = array_merge(["site/main"], $arrayParams);
+                    $url = Yii::$app->urlManager->createUrl($params);
+                    return $url;
                 }
+            ] : [
+                'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
+                'value' => function ($data) {
+                    return '';
+                },
+            ],
+            (Yii::$app->user->can('site.delete')) ?
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    $arrayParams = ['MainSearch' => ['region' => $model->region], 'id' => $model->id];
+                    $params = array_merge(["site/delete"], $arrayParams);
+                    $url = Yii::$app->urlManager->createUrl($params);
+                    return $url;
+                }
+            ] : [
+                'class' => 'yii\grid\DataColumn', // can be omitted, as it is the default
+                'value' => function ($data) {
+                    return '';
+                },
             ],
             ['class' => 'yii\grid\SerialColumn'],
 

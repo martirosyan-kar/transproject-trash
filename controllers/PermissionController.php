@@ -17,12 +17,20 @@ class PermissionController extends Controller
 {
     public function beforeAction($action)
     {
+        $permission = null;
         if ($this->id !== 'site') {
             $permission = $this->id . '.*';
         } else {
-            $permission = $this->id . '.' . $this->action->id;
+            $allowedActions = [
+                'index',
+                'chart',
+                'tables'
+            ];
+            if(!in_array($this->action->id,$allowedActions)) {
+                $permission = $this->id . '.' . $this->action->id;
+            }
         }
-        if (!\Yii::$app->user->can($permission)) {
+        if ($permission && !\Yii::$app->user->can($permission)) {
             $this->redirect(['user/security/login']);
         }
         return parent::beforeAction($action);
