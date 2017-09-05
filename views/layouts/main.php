@@ -20,6 +20,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?= $this->render('//partials/_analyticstracking'); ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -63,7 +64,6 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
-<?= $this->render('//partials/_analyticstracking'); ?>
 </body>
 </html>
 <?php $this->endPage() ?>
