@@ -63,6 +63,7 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<?= $this->render('//partials/_analyticstracking'); ?>
 </body>
 </html>
 <?php $this->endPage() ?>
